@@ -50,7 +50,7 @@ server.app.get('*', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 });
 
-server.listen(9527, '172.27.35.4');
+server.listen(9527,'172.27.35.1');
 
 
 

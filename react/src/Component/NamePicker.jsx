@@ -61,7 +61,7 @@ export default class NamePicker extends Component {
     }
 
 
-    togglePicker() {
+    togglePicker(e) {
 
         this.setState({
             isPickerShow: false
