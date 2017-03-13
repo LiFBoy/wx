@@ -1,0 +1,51 @@
+
+.viewport {
+  width: 320px;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 30px 0;
+  border: 1px solid red;
+  box-sizing: border-box;
+  -webkit-transform: translateZ(0);
+}
+
+
+
+.flipsnap {
+  width: 1060px;
+  /* 230px(item) * 5 + 45px(padding) */
+  padding-left: 60px;
+  box-sizing: border-box;
+}
+
+
+
+.flipsnap:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+  box-sizing: border-box;
+}
+
+.card-slide{
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  /*box-sizing: content-box;*/
+}
+
+
+.item {
+  box-sizing: border-box;
+  width: 200px;
+  text-align: center;
+  background: #EFEFEF;
+  float: left;
+  color: #666;
+  border: 1px solid red;
+  padding: 20px 0;
+
+  /*margin: 0 10px;*/
+}

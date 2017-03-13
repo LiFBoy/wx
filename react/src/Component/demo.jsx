@@ -4,7 +4,10 @@ import React, {Component, PropTypes} from 'react';
 
 // import Picker from 'react-mobile-picker';
 
-import ReactDOM, {render} from 'react-dom';
+// import ReactDOM, {render} from 'react-dom';
+
+
+import ReactSwipes from './swiper'
 
 // import NamePicker from './NamePicker'
 
@@ -20,7 +23,7 @@ import ReactDOM, {render} from 'react-dom';
 
 
 
-export default class Demo extends Component {
+export default class Demo extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -32,24 +35,45 @@ export default class Demo extends Component {
 
 
     render() {
+
+        // swipes 的配置
+        let opt = {
+            distance: 200, // 每次移动的距离，卡片的真实宽度，需要计算
+            swTouchend: (ev) => {
+                let data = {
+                    moved: ev.moved,
+                    originalPoint: ev.originalPoint,
+                    newPoint: ev.newPoint,
+                    cancelled: ev.cancelled
+                }
+                console.log(data);
+                // this.setState({
+                //     curCard: ev.newPoint
+                // })
+            }
+        };
+
+
+
+
         return (
-            // <div className="page">
-            //     <header className="page-header">
-            //         <h1 className="page-title">React Mobile Picker</h1>
-            //     </header>
-            //     <main className="page-body">
-            //         <p className="description">React Mobile Picker is a super simple component with no restriction, which means you can use it in any way you want.</p>
-            //         <p className="description">Here are two examples:</p>
-            //         <NamePicker />
-            //         <BirthPicker />
-            //     </main>
-            // </div>
             <div>
-                {/*<DatePicker onChange={this.handleValChange.bind(this)}/>*/}
+                <section className="demo" id="demo-distance">
+                    <h3>distance</h3>
+                    <div className="viewport">
+                        <div className="flipsnap">
+                            <ReactSwipes className="card-slide" options={opt} onclick={this.item.bind(this)}>
+                                <div className="item">1</div>
+                                <div className="item">2</div>
+                                <div className="item">3</div>
+                                <div className="item">4</div>
+                                <div className="item">5</div>
+                            </ReactSwipes>
 
-                sss
-
+                        </div>
+                    </div>
+                </section>
             </div>
         );
     }
-}
+    }

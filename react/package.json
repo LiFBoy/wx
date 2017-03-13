@@ -1,5 +1,5 @@
 {
-  "name": "react",
+  "name": "react22",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,10 +12,13 @@
   "dependencies": {
     "autoprefixer": "^6.4.0",
     "html-webpack-plugin": "^2.22.0",
-    "scss-loader": "0.0.1",
-    "webpack-px-to-rem": "^0.1.0",
     "react-redux": "^4.4.5",
-    "redux-thunk": "^2.1.0"
+    "react-swipe": "^5.0.6",
+    "react-swipes": "^1.0.4",
+    "redux-thunk": "^2.1.0",
+    "scss-loader": "0.0.1",
+    "swipe-js-iso": "^2.0.3",
+    "webpack-px-to-rem": "^0.1.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

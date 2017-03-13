@@ -96,7 +96,7 @@ module.exports = {
             },
 
             {
-                test: /\.(css|js|less)$/,
+                test: /\.(less)$/,
                 loader: 'webpack-px-to-rem',
                 //这个配置是可选的
                 query: {
