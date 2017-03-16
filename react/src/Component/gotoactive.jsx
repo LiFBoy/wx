@@ -95,7 +95,7 @@ class Gotoactive extends React.Component {
             success: (res=> {
                 if (res.code == 10150) {
                     const endTime = res.data.endtime;
-                    window.location.href = '/index.html#/Success/' + endTime + '';
+                //    window.location.href = '/index.html#/Success/' + endTime + '';
                     //  window.location.href = '/assets/module/activate/success.html?endTime=' + $scope.endTime + '&telephone=' + $scope.telephone + ''
                 } else {
 

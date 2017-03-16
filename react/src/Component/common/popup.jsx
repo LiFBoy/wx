@@ -7,8 +7,6 @@ export  default  class Popup extends React.Component{
     constructor(props){
         super(props);
         this.state={
-
-
         };
     }
 
@@ -35,11 +33,6 @@ export  default  class Popup extends React.Component{
         var config=this.props.config;
         var isSure=config.isSure;
         var isCancel=config.isCancel;
-
-
-        //
-        console.log('_flag'+this.state._flag)
-        console.log('blockOrNone'+this.state.blockOrNone);
         return (
 
             <div className="none" style={{display:(!!this.state.blockOrNone&&!!this.state._flag)?'block':'none'}} >

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import {bindActionCreators} from 'redux';
 
-import {R_header} from './common/index'
+import {R_header_fixed} from './common/index'
 
 import {HttpService, Toast}  from'../Http';
 
@@ -100,7 +100,7 @@ export default class App extends React.Component {
 
         return <div className="kaoqing">
 
-            <R_header title="考勤" left="1"/>
+            <R_header_fixed title="考勤" left="1"/>
 
 
             <div className="abc">

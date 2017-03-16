@@ -28,7 +28,7 @@ export default class Success extends React.Component {
         window.localStorage.delDevice = 1;
 
 
-        window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
+     //   window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
     }
 
     render() {

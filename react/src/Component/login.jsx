@@ -1,4 +1,4 @@
-'usr strict';
+'use strict';
 
 import React from 'react';
 
@@ -8,13 +8,109 @@ import phone from '../img/login/phone.png'
 import pwd from '../img/login/pwd.png'
 import user from '../img/login/user.png'
 
+import Model from './common/model'
+
+import header from '../img/login/header.jpg'
+import footer from '../img/login/footer.jpg'
+
 import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
 
 class Login extends React.Component {
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
+    constructor(props){
+        super(props);
+        this.state={
+            model:{
+
+            },
+            banners:{
+
+            }
+
+        };
+        this.modelConfig={
+            header: <div className="header">
+
+                <img src={header} className="app-all-img"/>
+
+
+            </div>,
+            content: <div className="content">
+
+                <div className="_header">
+                    市民认证
+                </div>
+                <div className="_content">
+                    姓名和身份证不匹配，身份证姓名和身份证不匹配，身份证姓名和身份证不匹配，身份证姓名和身份证不匹配，身份证
+                </div>
+                <div className="_footer">
+
+                    去认证
+
+                </div>
+
+
+
+
+            </div>,
+            footer: <div className="footer">
+                <img src={footer} className="app-all-img"/>
+            </div>
+
+        }
+    }
+
+    componentDidMount(){
+    }
+    async login(){
+
+        // this.setState({
+        //     model:{
+        //         flag:true
+        //     }
+        // })
+
+
+
+        const phone=this.refs.phone.value;
+        const pwd=this.refs.pwd.value;
+     var result=  await HttpService.save({
+            url:'/app/user/login',
+            data:{
+                account:phone,
+                password:pwd,
+                weixinclient:'true'
+            }
+        });
+        if(result.code==10008){
+
+            this.context.router.push('/map/' + result.data.token+'/'+result.data.userid);
+
+        }else if(result.code==10007){
+            Toast.toast(result.msg,3000)
+        }else if(result.code==100073){
+           //this.props.history.replaceState(null,'demo');
+            this.context.router.push('/demo');
+        }else if(result.code==100071){
+            Toast.toast(result.msg,3000)
+        }else if(result.code==100072){
+            Toast.toast(result.msg,3000)
+        }else if(result.code==100074){
+            //去认证
+        }else if(result.code==100075){
+            //去支付
+        }
+
+
+    }
     render() {
+        const {model} =this.state;
         return (
             <div className="app-login app-padding-lr24" ref='_login'>
-                <form>
+
+                <Model modelConfig={this.modelConfig} flag={model.flag}/>
                     <div className="step">
                         <div className="s-center">
                             <div className="login-img">
@@ -31,7 +127,7 @@ class Login extends React.Component {
 
                         <div className="s-flex1 app-666-font30">
                             <input className="app-333-font28 login-input"
-                                   placeholder="监护人手机号码" type="number"/>
+                                   placeholder="监护人手机号码" type="number" ref='phone'/>
                         </div>
 
                     </div>
@@ -42,12 +138,12 @@ class Login extends React.Component {
 
                         <div className="s-flex1 app-666-font30">
                             <input className="app-333-font28 login-input"
-                                   placeholder="6-20位字符密码，区分大小写" type="number"/>
+                                   placeholder="6-20位字符密码，区分大小写" type="password" ref="pwd" />
                         </div>
 
                     </div>
 
-                    <div className="step app-yellow-radius-check-button login-btn">
+                    <div className="step app-yellow-radius-check-button login-btn" onClick={this.login.bind(this)}>
                         {/*<input className="s-center" type="submit" readOnly="readOnly" value="登录"/>*/}
 
                         <div className="s-center">登录</div>
@@ -65,7 +161,6 @@ class Login extends React.Component {
 
                         </Link>
                     </div>
-                </form>
             </div>
 
         )

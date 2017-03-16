@@ -426,6 +426,8 @@ header{
 
 .kaoqing{
 
+  padding-top: 5rem;
+
   .kaoqinginfo{
     background-color: #FFFFff;
     .info{
@@ -950,9 +952,9 @@ header{
       }
     }
 
-    .phone,.endtime{
-      background: #fff;
+    .phone,.endtime,.shiming{
 
+      background: #fff;
       padding: 1rem 15px;
       width: 100%;
       display: flex;
@@ -972,10 +974,8 @@ header{
         display: flex;
         flex: 1;
         padding-left: 10px;
-
         font-size: 1.4rem;
         color: #333;
-
         align-items: center;
 
       }
@@ -1006,7 +1006,93 @@ header{
   opacity: 0.5;
 }
 
+.model_zindex{
+  position: fixed;
+  width: 100%;
+  height:100%;
+  z-index: 400;
+  top: 0;
+  left:0;
+  right: 0;
+  bottom:0;
+  background-color: #000000;
+  opacity: 0.5;
+}
 
+
+.model_content{
+  position: fixed;
+  width: 80%;
+  z-index: 402;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  margin: auto;
+  z-index: 402;
+  background: #FFFFff;
+  padding: 5px;
+  box-sizing: border-box;
+
+
+
+  .header{
+    width: 100%;
+    height: 160px;
+  }
+
+  .season-header{
+   padding: 1rem 0;
+  }
+
+  .content{
+    width: 100%;
+    height: auto;
+    ._header{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      font-size: 32px;
+    }
+    ._content{
+      width: 100%;
+      display: flex;
+      font-size: 24px;
+      color: #666666;
+      justify-content: center;
+
+    }
+    ._footer{
+      width: 100%;
+      display: flex;
+      font-size: 32px;
+      padding-top: 20px;
+      justify-content:center;
+      padding-bottom: 20px;
+    }
+
+  }
+
+  .footer{
+    width: 100%;
+    height: 56px;
+
+  }
+
+  .season-footer{
+    margin: 1rem 0;
+
+    .btn{
+      background: #01b4ee;
+      padding: 10px 20px;
+      color: #FFFFff;
+      font-size: 30px;
+      border-radius: 5px;
+    }
+
+  }
+}
 
 
 
@@ -1095,3 +1181,6 @@ header{
   }
 
 }
+
+
+

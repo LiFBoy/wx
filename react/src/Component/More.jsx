@@ -6,14 +6,24 @@ import {R_header} from './common/index';
 import {HttpService, Toast}  from'../Http';
 
 
+import { Link} from 'react-router';
+
+
 import endtime from '../img/more/endtime.png'
 import phone from '../img/more/phone.png'
 import deletes from '../img/more/delete.png'
+import shiming from '../img/more/shiming.png'
+import unauthen from '../img/more/unauthen.png'
+import authen from '../img/more/authen.png'
 
 import Popup  from './common/popup'
 
 
 export default class More extends React.Component {
+
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
 
 
     constructor(props) {
@@ -96,7 +106,7 @@ export default class More extends React.Component {
 
             var b = {
                 content: '解绑设备,确定要解除绑定吗？',
-            }
+            };
 
             this.config = Object.assign({}, this.config, b);
 
@@ -122,15 +132,22 @@ export default class More extends React.Component {
             data: {
                 token: localStorage.appToken,
                 babyid: this.props.params.babyid,
+                weixinclient:'true'
             },
 
             success: (res=> {
-                console.log(res)
+                console.log(res);
                 if (res.code == '10112') {
 
                     window.localStorage.delDevice = true;
 
-                    window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
+
+                    this.context.router.push('/map/' +localStorage.appToken+'/'+localStorage.userid);
+
+
+
+
+                  //  window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
                 }
             })
 
@@ -144,6 +161,8 @@ export default class More extends React.Component {
             data: {
                 token: localStorage.appToken,
                 babyid: this.props.params.babyid,
+                weixinclient:'true'
+
             },
 
             success: (res=> {
@@ -151,7 +170,9 @@ export default class More extends React.Component {
                 if (res.code == '10070') {
 
                     window.localStorage.delDevice = 1;
-                    window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
+                    // window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
+
+                    this.context.router.push('/map/' +localStorage.appToken+'/'+localStorage.userid);
                 }
 
             })
@@ -174,13 +195,24 @@ export default class More extends React.Component {
 
                         <div className="mdtid" style={{color: '#333'}}>扫描二维码关注宝贝的设备</div>
 
-                        <div className="mdtid">设备IMEI号:{info.mdtid}</div>
+                        <div className="mdtid" style={{lineHeight:'2rem'}}>设备IMEI号:{info.mdtid}</div>
                     </div>
+
+                    <Link to={'/authen'}>
+
+                    <div className="shiming app-margin-tb20">
+                        <div className="img">
+                            <img src={shiming} />
+                        </div>
+                        <div className="input">sim卡实名认证</div>
+                        <div></div>
+                    </div>
+                    </Link>
 
                     <div className="phone" style={{borderTop: '1px solid #EEEEEE'}}>
 
                         <div className="img">
-                            <img src={phone} alt=""/>
+                            <img src={phone} />
                         </div>
 
                         <div className="input">设备手机号</div>
@@ -192,7 +224,7 @@ export default class More extends React.Component {
                     </div>
                     <div className="endtime">
                         <div className="img">
-                            <img src={endtime} alt=""/>
+                            <img src={endtime} />
                         </div>
 
                         <div className="input">设备有效期</div>
@@ -209,7 +241,7 @@ export default class More extends React.Component {
                     <div className="endtime" onClick={this.deviceCancel.bind(this)}
                          style={{marginTop: '1rem', borderTop: '1px solid #eee'}}>
                         <div className="img">
-                            <img src={deletes} alt=""/>
+                            <img src={deletes}/>
                         </div>
 
                         <div className="input">解绑设备</div>

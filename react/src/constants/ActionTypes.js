@@ -22,6 +22,7 @@ export const aaa='aaa';
 export const GetAddr='GetAddr';
 export const isLogin='isLogin';
 export const exportMap='exportMap';
+export const GetAuthInfo='GetAuthInfo';
 
 
 

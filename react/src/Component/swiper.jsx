@@ -49,6 +49,8 @@ class ReactSwipes extends Component {
             distance: options.distance
         });
 
+
+
         // 各个阶段事件监听
         this.swipes.element.addEventListener('fstouchstart', function(ev) {
 
@@ -66,6 +68,7 @@ class ReactSwipes extends Component {
 
         this.swipes.element.addEventListener('fstouchend', ev => {
             console.log('end');
+
             options.swTouchend && options.swTouchend(ev);
         }, false);
 
@@ -81,18 +84,28 @@ class ReactSwipes extends Component {
         this.swipes.refresh();
     }
 
+
+    sub(){
+
+        this.props.item(window.x)
+    }
+
+
+
     render() {
         const { id, className, style, children } = this.props;
 
         console.log(className)
         // todo 计算 父级包裹元素的宽度
         return (
-            <div style={style.wrapper} className={className} ref="container">
-                {/*复制子节点*/}
-                {React.Children.map(children, (child) => {
-                    // return React.cloneElement(child, {style: style.child});
-                    return React.cloneElement(child);
-                })}
+            <div style={style.wrapper} onClick={this.sub.bind(this)} className={className} ref="container">
+                 {/*复制子节点*/}
+                {/*{React.Children.map(children, (child) => {*/}
+                    {/*// return React.cloneElement(child, {style: style.child});*/}
+                    {/*return React.cloneElement(child);*/}
+                {/*})}*/}
+                { children}
+
             </div>
         );
     }

@@ -11,6 +11,9 @@ import {R_header} from './common/index'
 import {scanDevice} from '../action/index'
 import {Toast} from '../Http'
 
+import kaoqin24 from '../img/login/kaoqin24.png'
+import kaoqin1356 from '../img/login/kaoqin1356.png'
+
 
 class AddDevice extends React.Component {
     constructor(props) {
@@ -37,11 +40,20 @@ class AddDevice extends React.Component {
     next(val, e) {
         e.preventDefault();
 
+        const {type} =this.props.params;
+        if(type==0){
+            var frequent="";
+        }else if(type==1){
+            var frequent=13.56;
+        }else if(type==2){
+            var frequent=2.4;
+        }
+
         if (!val) {
             Toast.toast('请输入设备号', 3000);
             return;
         }
-        this.props.scanDevice(val)
+        this.props.scanDevice(val,frequent)
     }
 
 
@@ -67,12 +79,41 @@ class AddDevice extends React.Component {
                             <button type="submit" style={{display: 'none'}}></button>
                         </label>
 
-                        <div className="col-xs-12" style={{marginTop: '1rem'}}>
-                            注：请输入设备背面、包装或说明书上的IMEI号的前14位数字、最后一位数字为核验码，不用输入！
-                        </div>
+                        {/*<div className="col-xs-12" style={{marginTop: '1rem'}}>*/}
+                            {/*注：请输入设备背面、包装或说明书上的IMEI号的前14位数字、最后一位数字为核验码，不用输入！*/}
+                        {/*</div>*/}
+
+
                     </form>
 
                 </div>
+
+                {
+                    this.props.params.type==0?'':<div className="app-device app-margin-lr40 app-margin-t30">
+                            <div className="step app-padding-t20">
+                                <div className="s-center app-hong-font28">"考勤卡号" &nbsp;如图所示数子</div>
+                            </div>
+                            <div className="step">
+
+                                <div className="s-flex1">
+                                    <div className="step s-flex-d app-padding-tb20 app-padding-lr24">
+                                        <div className="s-center app-333-font28">2.4G白卡</div>
+                                        <div className="s-center">
+                                            <img src={kaoqin24} className="app-all-img"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="s-flex1">
+                                    <div className="step s-flex-d app-padding-tb20 app-padding-lr24">
+                                        <div className="s-center app-333-font28">13.56白卡</div>
+                                        <div className="s-center">
+                                            <img src={kaoqin1356} className="app-all-img"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                }
 
             </div>
         )

@@ -18,6 +18,8 @@ import './auto-set-rem'
 import  './less/my.bootstrap.min.css'
 import  './less/wx.less'
 import  './less/common.less'
+import  './less/swiper.css'
+import  './less/swiper2.css'
 
 render(
 

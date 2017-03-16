@@ -284,6 +284,7 @@ export function change(res) {
         dispatch(Change(data));
         dispatch(getCurrentPower(data.babyid));
         dispatch(getCurrentTrack(data.babyid));
+        dispatch(getAuthInfo(data.babytelephone))
     }
 }
 
@@ -312,6 +313,15 @@ export function getSafeRegions1(res) {
     return {
         type: types.GetSafeRegions1,
         res
+    }
+}
+
+
+
+export function GetAuthInfo(msg) {
+    return{
+        type:types.GetAuthInfo,
+        msg
     }
 }
 
@@ -349,6 +359,34 @@ export function doLogin(sid) {
 
 }
 
+
+export function doLogin2(token,userid,component) {
+    return function (dispatch) {
+        window.localStorage.appToken = token;
+
+        window.localStorage.userid = userid;
+
+        dispatch(getDeviceList(component));
+
+        // return HttpService.query({
+        //     url: '/apph5/user/login',
+        //     data: {sid: sid},
+        //     success: (res=> {
+        //         if (res.code == '30010') {
+        //             //dispatch(getToken(res.data));
+        //             window.localStorage.appToken = res.data.token;
+        //             window.localStorage.userid = res.data.userid;
+        //             dispatch(getDeviceList())
+        //
+        //         } else {
+        //             dispatch(isLong(false))
+        //         }
+        //     })
+        // });
+
+    }
+
+}
 /**
  * 获取位置
  * @param babyid
@@ -359,11 +397,11 @@ export function getMap(babyid) {
         return HttpService.query({
             url: '/app/map/getCurrentTrack',
 
-            data: {token: localStorage.appToken, babyid: babyid},
+            data: {token: localStorage.appToken, babyid: babyid,weixinclient:'true'},
 
             success: (res=> {
 
-                console.log('来了')
+                console.log('来了');
 
 
                 console.log(res);
@@ -399,7 +437,7 @@ export function getMap(babyid) {
 export function getOneBabyid() {
     return function (dispatch) {
         return HttpService.query({
-            url: '/app/object/getBabys',
+            url: '/app/object/getBabys?weixinclient=true',
             data: {token: localStorage.appToken},
             success: (res=> {
 
@@ -433,12 +471,12 @@ export function getOneBabyid() {
 
 
 //获取设备list
-export function getDeviceList() {
+export function getDeviceList(component) {
 
     return function (dispatch) {
         return HttpService.query({
             url: '/app/object/getBabys',
-            data: {token: localStorage.appToken},
+            data: {token: localStorage.appToken,weixinclient:'true'},
             success: (res=> {
 
                 console.log(res);
@@ -458,15 +496,26 @@ export function getDeviceList() {
 
                     //alert(localStorage.babyid)
 
-                    dispatch(getChecked('false'));
+                    //dispatch(getChecked('false'));
 
 
                     dispatch(getCurrentTrack(res.data[0].babyid));
 
 
+                    dispatch(getAuthInfo(res.data[0].babytelephone))
+
+
                 } else {
 
-                    dispatch(getChecked('true'));
+                 //   alert(11)
+
+                    console.log(component);
+
+                    component.context.router.push('/demo');
+
+
+
+                    //dispatch(getChecked('true'));
 
 
                 }
@@ -489,7 +538,8 @@ function getA(babyid, data) {
             url: '/app/object/getGuardians',
             data: {
                 token: localStorage.appToken,
-                babyid: babyid
+                babyid: babyid,
+                weixinclient:'true'
             },
             success: (res=> {
                 console.log(res);
@@ -525,15 +575,32 @@ function getA(babyid, data) {
 }
 
 
+//判断是否认证
+export function getAuthInfo(babyphone) {
+    return function (dispatch) {
+        return HttpService.query({
+            url: '/app/user/getAuthInfo',
+            data: {token: localStorage.appToken, devicetelephone: babyphone,weixinclient:'true'},
+            success: (res=> {
 
+                console.log(res);
+                if (res.code == 10158) {
+                    
+                    dispatch(GetAuthInfo(res.data))
+                   
+                } else {
+                    
+                }
+            })
+        })
+    }
+}
 //获取设备电量
 export function getCurrentPower(babyid) {
     return function (dispatch) {
-
-
         return HttpService.query({
             url: '/app/alarm/getCurrentPower',
-            data: {token: localStorage.appToken, babyid: babyid},
+            data: {token: localStorage.appToken, babyid: babyid,weixinclient:'true'},
             success: (res=> {
 
                 console.log(res);
@@ -576,7 +643,8 @@ export function getGuardianss(babyid) {
             url: '/app/object/getGuardians',
             data: {
                 token: localStorage.appToken,
-                babyid: babyid
+                babyid: babyid,
+                weixinclient:'true'
             },
             success: (res=> {
                 console.log(res);
@@ -633,7 +701,8 @@ function _getGuardians(babyid) {
             url: '/app/object/getGuardians',
             data: {
                 token: localStorage.appToken,
-                babyid: babyid
+                babyid: babyid,
+                weixinclient:'true'
             },
             success: (res=> {
                 console.log(res);
@@ -685,7 +754,7 @@ function getCurrentTrack(babyid) {
         return HttpService.query({
             url: '/app/map/getCurrentTrack',
 
-            data: {token: localStorage.appToken, babyid: babyid},
+            data: {token: localStorage.appToken, babyid: babyid,weixinclient:'true'},
 
             success: (res=> {
 
@@ -803,14 +872,16 @@ function init(lng, lat) {
 }
 
 
-export function scanDevice(mdtcode) {
+export function scanDevice(mdtcode,frequent) {
+
+
     return function (dispatch) {
 
 
         return HttpService.query({
             url: '/app/device/scanDevice',
 
-            data: {token: localStorage.appToken, mdtcode: mdtcode, mdtid: mdtcode,},
+            data: {token: localStorage.appToken, mdtcode: mdtcode, mdtid: mdtcode,weixinclient:'true',frequent:frequent},
 
 
             success: (res=> {
@@ -821,7 +892,7 @@ export function scanDevice(mdtcode) {
                     const telephone = res.data.telephone;
                     const mdtid = res.data.mdtid;
 
-                    window.location.href = '/index.html#Gotoactive/' + telephone + '/' + mdtid + '';
+                  //  window.location.href = '/index.html#Gotoactive/' + telephone + '/' + mdtid + '';
 
 
                 } else if (res.code == 10078) {
@@ -831,7 +902,7 @@ export function scanDevice(mdtcode) {
                     const deviceid = res.data.deviceid;
                     const telephone = res.data.telephone;
 
-                    window.location.href = '/index.html#VerifyText/' + admintelephone + '/' + mdtid + '/' + deviceid + '/' + telephone + '';
+               //     window.location.href = '/index.html#VerifyText/' + admintelephone + '/' + mdtid + '/' + deviceid + '/' + telephone + '';
 
                 } else {
 
@@ -854,7 +925,8 @@ export function getSafeRegions(babyid) {
                 token: localStorage.appToken,
                 babyid: babyid,
                 pageindex: 1,
-                pagesize: 50
+                pagesize: 50,
+                weixinclient:'true'
             },
             success: (res=> {
 

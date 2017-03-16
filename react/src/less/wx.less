@@ -69,6 +69,10 @@
   font-size: 28px;
   color: @color-333;
 }
+.app-hong-font28{
+  font-size: 28px;
+  color: #ff626d;
+}
 .app-333-font24{
   font-size: 24px;
   color: @color-333;
@@ -121,6 +125,7 @@
 .app-wh120{
   width: 100%;
   padding:1.5rem 0;
+  //background: @color-white;
 }
 .app-wh88{
   width: 100%;
@@ -844,7 +849,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-
   margin: auto;
   z-index: 402;
 
@@ -881,12 +885,6 @@
     height: auto;
     position: relative;
     padding: 40px 30px 32px 30px;
-
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-
-
-
   }
   .foot{
 
@@ -946,3 +944,88 @@
 .app-a{
   text-decoration: none;
 }
+
+.app-swiper{
+  text-align: center;
+  //width: 75vw !important;
+  margin: 0 auto;
+  width: 300px !important;
+}
+.app-swiper-container{
+  width: 600px !important;
+}
+.app-select{
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 40px;
+  height: 40px;
+  z-index: 999;
+}
+
+.app-btn{
+  line-height: 88px;
+  height: 88px;
+  text-align: center;
+}
+
+
+.app-headerImg{
+  width: 40px;
+  height: 40px;
+}
+
+.app-textAlgin{
+  text-align: center;
+  padding-top: 20px;
+  //padding-bottom: 15px;
+}
+
+.card{
+  position: relative;
+  z-index: 1;
+  .app-upload{
+    position: absolute;
+    z-index: 2;
+    width: 90px;
+    height: 46px;
+    background: @color-active;
+    font-size: 24px;
+    color: #FFFFff;
+    top: 50%;
+    left: 50%;
+    margin: auto;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    text-align: center;
+    line-height: 46px;
+  }
+
+  .app-delete{
+    position: absolute;
+    z-index: 2;
+    background: #f44b48;
+    font-size: 24px;
+    width: 90px;
+    height: 46px;
+    color: #FFFFff;
+    top: 90%;
+    left: 50%;
+    margin: auto;
+    transform: translate(-50%,-90%);
+    border-radius: 10px;
+    text-align: center;
+    line-height: 46px;
+
+  }
+
+}
+
+.app-device{
+  border: 2px solid #DDDDDD;
+}
+
+
+
+
+

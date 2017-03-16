@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
 
 import back from '../../img/back.png'
+import reason from '../../img/more/reason.png'
 
 
 import Tool from '../../Tool'
@@ -60,6 +61,10 @@ export class R_header extends Component {
 
     }
 
+    reason(){
+        this.props.auSeason(true);
+    }
+
     render() {
         const {title, left, right,map} = this.props;
 
@@ -105,7 +110,11 @@ export class R_header extends Component {
                                     onClick={this.handlesearch.bind(this)}>
                                     搜索
                                 </div> :
-                                null
+                                right==3? <div
+                                        style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}
+                                        onClick={this.reason.bind(this)}>
+                                        <img src={reason} className="app-headerImg"/>
+                                    </div>:''
                     }
 
                 </div>

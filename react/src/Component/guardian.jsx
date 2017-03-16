@@ -796,7 +796,7 @@ export default class Guardian extends Component {
 
 
         if (hasJ && tel == '') {
-            window.location.href = '/index.html#/AddGuardian/' + this.props.params.babyid + '/' + this.state.guardianid + '/' + familystatus;
+          //  window.location.href = '/index.html#/AddGuardian/' + this.props.params.babyid + '/' + this.state.guardianid + '/' + familystatus;
         } else {
 
         }

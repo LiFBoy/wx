@@ -5,16 +5,21 @@ var config = require('./webpack.config');
 
 // 相当于通过本地node服务代理请求
 var proxy = [
+    // {
+    //
+    //     path: '/appH5/*',
+    //     target: 'http://wx.17find.com/',
+    //     host: '222.46.27.218:8800'
+    // },
+    // {
+    //
+    //     path: '/appH5/*',
+    //     target: 'http://222.46.27.218:8800',
+    //     host: '222.46.27.218:8800'
+    // },
     {
-
-        path: '/appH5/*',
-        target: 'http://wx.17find.com/',
-        host: '222.46.27.218:8800'
-    },
-    {
-
-        path: '/appH5/*',
-        target: 'http://222.46.27.218:8800',
+        path: '/app/*',
+        target: 'http://api.17find.com/',
         host: '222.46.27.218:8800'
     },
     {
@@ -50,7 +55,7 @@ server.app.get('*', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 });
 
-server.listen(9527,'172.27.35.4');
+server.listen(9527,'172.27.35.6');
 
 
 

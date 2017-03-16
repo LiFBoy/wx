@@ -5,7 +5,7 @@ import ReactDOM, {render} from 'react-dom';
 
 import {HttpService, Toast, GetCurrentDate} from'../Http';
 
-import {doLogin, change, getOneBabyid, changeSaveBabyStatus, getMap, getCurrentPower, exportMap} from '../action/index'
+import {doLogin, doLogin2, change, getOneBabyid, changeSaveBabyStatus, getMap, getCurrentPower, exportMap} from '../action/index'
 
 
 import {connect} from 'react-redux';
@@ -74,6 +74,10 @@ import lsb from '../../src/img/bind/lsb.png'
 
 
 class MapIndex extends React.Component {
+
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
     constructor(props) {
         super(props);
 
@@ -101,9 +105,11 @@ class MapIndex extends React.Component {
         console.log(this.props)
 
         if (!this.props.babyid) {
+
+            console.log(this)
             //   alert('没值')
 
-            this.props.doLogin(this.props.params.sid);
+            this.props.doLogin2(this.props.params.sid,this.props.params.userid,this);
 
         } else {
             //是否改变过宝贝 1改了 0没改变
@@ -133,7 +139,11 @@ class MapIndex extends React.Component {
 
         console.log(this.props.exportMap);
 
-        this.props.exportMap.clearMap();
+        if(this.props.exportMap.length!=0){
+            this.props.exportMap.clearMap();
+        }
+
+
         var node = document.getElementById('container');
         if (!!node.parentNode) {
             console.log(22);
@@ -579,7 +589,7 @@ class MapIndex extends React.Component {
                                 </Link>
                             </div >
                             <div className="option">
-                                <Link to="/AddDevice">
+                                <Link to="/demo">
                                     <img src={tianjia} style={{width: '2.3rem', height: '2.3rem'}}/>
                                     <div>添加设备</div>
                                 </Link>
@@ -650,6 +660,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         doLogin: doLogin,
+        doLogin2: doLogin2,
         change: change,
         getOneBabyid: getOneBabyid,
         changeSaveBabyStatus: changeSaveBabyStatus,

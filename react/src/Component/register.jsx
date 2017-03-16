@@ -1,4 +1,4 @@
-'usr strict';
+'use strict';
 
 import React from 'react';
 
@@ -62,7 +62,32 @@ class register extends React.Component {
         return true
     }
 
+    async sregister(val,code){
+
+        const pwd=this.refs.pwd.value;
+        const result=await HttpService.save({
+            url:'/app/user/logon?weixinclient=true',
+            data:{
+                account:val,
+                smscode:code,
+                password:pwd
+            }
+        });
+
+        if(result.code==10006){
+
+            clearInterval(this.countdown);
+
+        }else{
+            Toast.toast(result.msg,3000)
+        }
+    }
+
+
+
     async getCode(phone) {
+
+       // alert(phone)
 
 
         if (!this.check_phone(phone)) {
@@ -71,42 +96,60 @@ class register extends React.Component {
         if (this.state.disabled) {
             return;
         }
-
-        // let self = this;
-        try {
-            // let code = await HttpService.save({
-            //     url: "/v1/public/send/verify/code",
-            //     data: {phone: phone}
-            // });
-            // console.log(code);
-
-            this.setState({
-                disabled: true,
-                text: '59s后重新获取',
-                timer: 59,
+            let code = await HttpService.save({
+                url: "/app/user/checkTelephone?weixinclient=true",
+                data: {account: phone}
             });
+            console.log(code);
 
+            if(code.code==10003){
 
-            this.countdown = setInterval( ()=> {
-                var tt = this.state.timer - 1;
-                if (tt <= 0) {
+                const code=await HttpService.save({
+                    url:'/app/user/generateSMSCode?weixinclient=true',
+                    data:{
+                        account: phone,
+                        module:'reg'
+                    }
+                });
+
+                if(code.code==10004){
                     this.setState({
-                        disabled: false,
-                        text: '获取验证码',
-                        timer: 60,
+                        disabled: true,
+                        text: '59s后重新获取',
+                        timer: 59,
                     });
-                    clearInterval(this.countdown);
-                    return;
+
+
+                    this.countdown = setInterval( ()=> {
+                        var tt = this.state.timer - 1;
+                        if (tt <= 0) {
+                            this.setState({
+                                disabled: false,
+                                text: '获取验证码',
+                                timer: 60,
+                            });
+                            clearInterval(this.countdown);
+                            return;
+                        }
+                        this.setState({
+                            disabled: true,
+                            text: tt + 's后重新获取',
+                            timer: tt,
+                        })
+                    }, 1000);
+                }else{
+                    Toast.toast(code.msg,'3000')
                 }
-                this.setState({
-                    disabled: true,
-                    text: tt + 's后重新获取',
-                    timer: tt,
-                })
-            }, 1000);
-        } catch (err) {
-            // console.log(err); // 这里捕捉到错误 `error`
-        }
+
+
+
+
+            }else if(code.code==10002){
+                Toast.toast(code.msg,3000);
+            }
+
+
+
 
 
     }
@@ -158,8 +201,8 @@ class register extends React.Component {
                         </div>
 
                         <div className="s-flex1 app-666-font30">
-                            <input className="app-333-font28 login-input"
-                                   placeholder="6-20位字符密码，区分大小写" type="number"/>
+                            <input className="app-333-font28 login-input" ref="pwd"
+                                   placeholder="6-20位字符密码，区分大小写" type="password"/>
                         </div>
 
 
@@ -170,7 +213,7 @@ class register extends React.Component {
 
 
 
-                    <div className="step app-yellow-radius-check-button login-btn">
+                    <div className="step app-yellow-radius-check-button login-btn" onClick={this.sregister.bind(this,val,code)}>
                         {/*<input className="s-center" type="submit" readOnly="readOnly" value="登录"/>*/}
 
                         <div className="s-center">开通并登录</div>

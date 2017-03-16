@@ -268,6 +268,7 @@
 // 判定是否需要滑动并触发事件
     Flipsnap.prototype.moveToPoint = function(point, transitionDuration) {
         var self = this;
+        window.x=Math.abs(point);
 
         // 不在init时候设置 transitionDuration 是为了可以动态改变
         transitionDuration = transitionDuration === undefined
@@ -318,6 +319,9 @@
 // 移动到指定位置
     Flipsnap.prototype._setX = function(x, transitionDuration) {
         console.log('x:'+x);
+
+
+
         var self = this;
         self.currentX = x;
         if (support.cssAnimation) {

@@ -67,7 +67,7 @@ module.exports = {
         "redux": "Redux",
         "react-redux": "ReactRedux",
     },
-    // devtool: 'source-map',
+     devtool: 'source-map',
     module: {
         loaders: [
 
@@ -96,7 +96,7 @@ module.exports = {
             },
 
             {
-                test: /\.(less)$/,
+                test: /\.(js|css|less)$/,
                 loader: 'webpack-px-to-rem',
                 //这个配置是可选的
                 query: {

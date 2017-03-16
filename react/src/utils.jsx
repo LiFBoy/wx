@@ -11,22 +11,23 @@ export  class HttpService {
                                 var response;
                                 try {
                                     response = JSON.parse(request.responseText);
+                                    resolve(response)
                                 } catch (e) {
                                     reject(e);
                                 }
-                                if (response.code=='0') {
-                                    resolve(response);
-                                }else{
-
-                                  //       window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
-
-                                    Toast.toast(response.desc, 3000);
-                                    //reject(response)
-                                }
+                                // if (response.code=='0') {
+                                //     resolve(response);
+                                // }else{
+                                //
+                                //   //       window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
+                                //
+                                //     Toast.toast(response.desc, 3000);
+                                //     //reject(response)
+                                // }
                             } else {
                              //   window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
 
-                                Toast.toast(JSON.parse(request.responseText).desc, 3000);
+                              //  Toast.toast(JSON.parse(request.responseText).desc, 3000);
                                 //reject(request);
                             }
                         }
@@ -103,22 +104,14 @@ export  class HttpService {
                         var response;
                         try {
                             response = JSON.parse(request.responseText);
+                            resolve(response);
                         } catch (e) {
                             reject(e);
-                        }
-                        if (response.code=='0') {
-                            resolve(response);
-                        }else{
-
-                             //   window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
-
-                            Toast.toast(response.desc, 3000);
-                            //reject(response)
                         }
                     } else {
                        // window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
 
-                        Toast.toast(JSON.parse(request.responseText).desc, 3000);
+                     //   Toast.toast(JSON.parse(request.responseText).desc, 3000);
                         //reject(request);
                     }
                 }
