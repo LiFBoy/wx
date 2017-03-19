@@ -7,8 +7,8 @@ import ReactDOM, {render} from 'react-dom';
 import Popup  from './common/popup'
 
 
-import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
-
+//import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
+import Link from './common/Link'
 
 import {HttpService, Toast, Md5}  from'../Http';
 import {R_header_fixed} from './common/index';
@@ -66,7 +66,8 @@ export default class Guardian extends Component {
                     url: '/app/object/syncGuardian',
                     data: {
                         token: localStorage.appToken,
-                        babyid: this.props.params.babyid
+                        babyid: this.props.params.babyid,
+                        weixinclient:'true'
                     },
                     success: (res=> {
                         console.log(res);
@@ -185,7 +186,8 @@ export default class Guardian extends Component {
             url: '/app/object/syncGuardian',
             data: {
                 token: localStorage.appToken,
-                babyid: this.props.params.babyid
+                babyid: this.props.params.babyid,
+                weixinclient:'true'
             },
             success: (res=> {
                 console.log(res);
@@ -223,7 +225,8 @@ export default class Guardian extends Component {
             url: "/app/object/getGuardians",
             data: {
                 token: localStorage.appToken,
-                babyid: this.props.params.babyid
+                babyid: this.props.params.babyid,
+                weixinclient:'true'
             },
             success: (res)=> {
                 console.log(res);
@@ -741,7 +744,8 @@ export default class Guardian extends Component {
             data: {
                 token: localStorage.appToken,
                 babyid: this.props.params.babyid,
-                guardianid: id
+                guardianid: id,
+                weixinclient:'true'
             },
             success: (res=> {
                 if (res.code == '10112') {

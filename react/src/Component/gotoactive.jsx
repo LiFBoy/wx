@@ -13,6 +13,11 @@ import {HttpService, Toast}  from'../Http';
 
 class Gotoactive extends React.Component {
 
+
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -81,29 +86,64 @@ class Gotoactive extends React.Component {
             return;
         }
 
+        if(this.props.params.code==0){
 
-        HttpService.query({
-            url: '/app/device/guardianActive',
+            HttpService.query({
+                url: '/app/device/guardianActive',
+                data: {
+                    mdtid: this.props.params.mdtid,
+                    telephone: this.props.params.telephone,
+                    studentname: studentname,
+                    teachertel: teachertel,
+                    babyname:this.refs.nicheng.value,
+                    token: localStorage.appToken,
+                    weixinclient:'true'
+                },
+                success: (res=> {
+                    if (res.code == 10150) {
+                        const endTime = res.data.endtime;
+                        this.context.router.push(`/success/${endTime}`);
+                        //    window.location.href = '/index.html#/Success/' + endTime + '';
+                    } else {
+                        Toast.toast(res.msg, 3000);
+                    }
+                })
 
-            data: {
-                mdtid: this.props.params.mdtid,
-                telephone: this.props.params.telephone,
-                studentname: studentname,
-                teachertel: teachertel,
-                token: localStorage.appToken
-            },
-            success: (res=> {
-                if (res.code == 10150) {
-                    const endTime = res.data.endtime;
-                //    window.location.href = '/index.html#/Success/' + endTime + '';
-                    //  window.location.href = '/assets/module/activate/success.html?endTime=' + $scope.endTime + '&telephone=' + $scope.telephone + ''
-                } else {
-
-                    Toast.toast(res.msg, '3000');
-                }
             })
 
-        })
+
+
+        }else if(this.props.params.code==100073){
+
+            HttpService.query({
+                url: '/app/user/logon6',
+                data: {
+                    mdtid: this.props.params.mdtid,
+                    telephone: this.props.params.telephone,
+                    studentname: studentname,
+                    teachertel: teachertel,
+                    babyname:this.refs.nicheng.value,
+                    userid: localStorage.userid,
+                    weixinclient:'true'
+                },
+                success: (res=> {
+                    if (res.code == 10150) {
+                        const endTime = res.data.endtime;
+                        alert(res.data.token);
+                        window.localStorage.appToken = res.data.token;
+                        this.context.router.push(`/success/${endTime}`);
+                        //    window.location.href = '/index.html#/Success/' + endTime + '';
+                    } else {
+
+                        Toast.toast(res.msg, '3000');
+                    }
+                })
+
+            })
+
+        }
+
+
     }
 
 
@@ -131,7 +171,12 @@ class Gotoactive extends React.Component {
                             <input id="number2" type="text" disabled placeholder="请输入设备手机号"
                                    value={this.props.params.telephone}/>
                         </div>
-                        <div className="col-xs-12 app-content-title app-padding-zero">学校监管</div>
+                        <div className="col-xs-12 app-content-title app-padding-zero">实名认证</div>
+
+                        <div className="col-xs-12 app-white-input">
+                            <label className="app-white-input-label">宝贝昵称</label>
+                            <input id="number3" type="text" placeholder="请输入宝贝昵称" ref="nicheng"/>
+                        </div>
                         <div className="col-xs-12 app-white-input">
                             <label className="app-white-input-label">宝贝姓名</label>
                             <input id="number3" type="text" placeholder="请输入宝贝姓名" onChange={this.name.bind(this)}/>

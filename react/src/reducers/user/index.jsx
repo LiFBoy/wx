@@ -21,7 +21,7 @@ const initialState = {
 
     gpstime: '',
 
-    checked: 'false',
+    checked: false,
 
 
     relationList: false,
@@ -51,6 +51,7 @@ export default function login(state = initialState, action) {
                 list: action.res,
                 babyName: action.res[0].babyname,
                 babyid: action.res[0].babyid,
+                authstatus:action.res[0].authstatus,
                 babytelephone: action.res[0].babytelephone,
                 headimg: action.res[0].headimg,
                 getGuardiansList: [],
@@ -69,6 +70,7 @@ export default function login(state = initialState, action) {
             return Tool.assign({}, state, {
                 babyName: action.res.babyName,
                 babyid: action.res.babyid,
+                authstatus:action.res.authstatus,
                 babytelephone: action.res.babytelephone,
                 headimg: action.res.headimg,
                 getGuardiansList: [],

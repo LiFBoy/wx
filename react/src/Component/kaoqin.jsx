@@ -63,6 +63,7 @@ export default class App extends React.Component {
                 babyid: babyid,
                 starttime: time1,
                 endtime: time2,
+                weixinclient:'true'
 
             },
             success: (res=> {

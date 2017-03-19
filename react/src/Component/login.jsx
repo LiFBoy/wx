@@ -13,7 +13,17 @@ import Model from './common/model'
 import header from '../img/login/header.jpg'
 import footer from '../img/login/footer.jpg'
 
-import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
+
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+//import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+
+
+import Link from './common/Link'
+
+import {doLogin2} from '../action/index'
+
 
 class Login extends React.Component {
     static contextTypes = {
@@ -63,6 +73,17 @@ class Login extends React.Component {
     }
 
     componentDidMount(){
+
+        // var a=document.getElementsByTagName('a');
+        // for(var i=0;i<a.length;i++){
+        //     alert(111)
+        //     a[i].addEventListener('touchstart',function(){},false);
+        // }
+    }
+
+
+    ee(event){
+        event.preventDefault();
     }
     async login(){
 
@@ -84,15 +105,20 @@ class Login extends React.Component {
                 weixinclient:'true'
             }
         });
+
+        window.localStorage.delDevice = 0;
         if(result.code==10008){
+
+            this.props.doLogin2(result.data.token,result.data.userid,this);
 
             this.context.router.push('/map/' + result.data.token+'/'+result.data.userid);
 
         }else if(result.code==10007){
             Toast.toast(result.msg,3000)
         }else if(result.code==100073){
+            window.localStorage.userid = result.data.userid;
            //this.props.history.replaceState(null,'demo');
-            this.context.router.push('/demo');
+            this.context.router.push('/demo/100073');
         }else if(result.code==100071){
             Toast.toast(result.msg,3000)
         }else if(result.code==100072){
@@ -161,6 +187,10 @@ class Login extends React.Component {
 
                         </Link>
                     </div>
+
+                {/*<div>*/}
+                    {/*<span><a href='http://www.baidu.com' target='_blank'>BLANK-</a></span>*/}
+                {/*</div>*/}
             </div>
 
         )
@@ -168,4 +198,19 @@ class Login extends React.Component {
 }
 
 
-export default Login
+
+const mapStateToProps = state => {
+    return {
+
+
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+
+        doLogin2: doLogin2,
+
+
+    }, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

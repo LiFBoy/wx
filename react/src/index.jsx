@@ -9,6 +9,14 @@ import {Router,hashHistory,browserHistory} from 'react-router';
 import { Provider } from 'react-redux';
 
 import createStore from './store'
+
+import WxServer from './wx/WxServer'
+
+setTimeout(()=>{
+    // WxServer.init()
+    console.log(wx)
+},3000);
+
 let store = createStore();
 
 import routes from './Route'; //路由配置

@@ -12,6 +12,11 @@ import {HttpService, Toast}  from'../Http';
 
 export default class VerifyText extends React.Component {
 
+
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -37,7 +42,6 @@ export default class VerifyText extends React.Component {
 
     getCode() {
 
-        var self = this;
 
         if (this.state.disabled) {
             return;
@@ -50,29 +54,24 @@ export default class VerifyText extends React.Component {
                 telephone: this.props.params.telephone,
                 admintelephone: this.props.params.admintelephone,
                 module: 'scandevice',
-                mdtid: this.props.params.mdtid
+                mdtid: this.props.params.mdtid,
+                weixinclient:'true'
+
             },
             success: (res)=> {
 
-                console.log(res);
-
                 if (res.code == 10004) {
-
-                    console.log(2222)
-
-                    console.log(self)
-
-                    self.setState({
+                    this.setState({
                         disabled: true,
                         text: '119s后重新获取',
                         timer: 119,
                         bg: 'app-blue-radius-check-button'
                     });
 
-                    this.countdown = setInterval(function () {
-                        var tt = self.state.timer - 1;
+                    this.countdown = setInterval( ()=> {
+                        var tt = this.state.timer - 1;
                         if (tt <= 0) {
-                            self.setState({
+                            this.setState({
                                 disabled: false,
                                 text: '获取验证码',
                                 timer: 120,
@@ -81,7 +80,7 @@ export default class VerifyText extends React.Component {
                             clearInterval(this.countdown);
                             return;
                         }
-                        self.setState({
+                        this.setState({
                             disabled: true,
                             text: tt + 's后重新获取',
                             timer: tt,
@@ -122,16 +121,21 @@ export default class VerifyText extends React.Component {
                 token: localStorage.appToken,
                 admintelephone: this.props.params.admintelephone,
                 smscode: this.state.val,
-                deviceid: this.props.params.deviceid
+                deviceid: this.props.params.deviceid,
+                weixinclient:'true'
             },
             success: (res=> {
                 console.log(res);
 
                 if (res.code == 10080) {
 
+                    clearInterval(this.countdown);
+
                     window.localStorage.delDevice = 1;
 
-                 //   window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
+                    this.context.router.push(`/map/${localStorage.appToken}/${localStorage.userid}`);
+
+                    //window.location.href = '/index.html#/map/' + localStorage.appToken + '';
                 } else {
 
                     Toast.toast(res.msg, 3000);

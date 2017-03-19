@@ -12,6 +12,7 @@ class model extends React.Component {
         const modelConfig=this.props.modelConfig;
 
         const classname=Cs('model_content',{'app-padding-lr40':!!this.props.modelConfig.model_content})
+        // const model_content_content=Cs('model_content',{'app-padding-lr40':!!this.props.modelConfig.model_content_content})
 
        // const style=!!this.props.model_content?this.props.model_content:''
 

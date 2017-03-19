@@ -4,6 +4,7 @@ import ReactDOM, {render} from 'react-dom';
 
 
 import {HttpService, Toast, GetCurrentDate} from'../Http';
+import {Tool} from'../utils';
 
 import {doLogin, doLogin2, change, getOneBabyid, changeSaveBabyStatus, getMap, getCurrentPower, exportMap} from '../action/index'
 
@@ -12,8 +13,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 
-import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
+//import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
 
+import Link from './common/Link'
 import '../less/index.less'
 
 import '../less/deviceList.less'
@@ -61,6 +63,11 @@ import more from '../../src/img/more.png'
 import guanbi from '../../src/img/guanbi.png'
 
 
+
+import header from '../img/login/header.jpg'
+import footer from '../img/login/footer.jpg'
+
+
 import jianhuchengyuan  from '../../src/img/jianhuchengyuan.png'
 
 
@@ -69,14 +76,21 @@ import  genghuan from '../../src/img/genghuan.png'
 import  jiebang from '../../src/img/jiebang.png'
 
 import kaoqin from '../../src/img/kaoqin.png'
-import sb from '../../src/img/bind/sb.png'
 import lsb from '../../src/img/bind/lsb.png'
+
+ import Model from './common/model'
 
 
 class MapIndex extends React.Component {
 
     static contextTypes = {
         router: React.PropTypes.object.isRequired
+    };
+
+    static defaultProps = {
+
+        authstatus:'li'
+
     };
     constructor(props) {
         super(props);
@@ -91,38 +105,234 @@ class MapIndex extends React.Component {
             babyname: '',
             babyid: '',
 
+
+            model:{
+
+            },
+            babyInfo:{
+
+            },
+            is:false
+
         };
+
+        this.modelConfigBabyNone={
+            model_content_contnet:true,
+            header: <div className="header">
+
+                <img src={header} className="app-all-img"/>
+
+
+            </div>,
+            content: <div className="content">
+
+                <div className="_header">
+
+                </div>
+                <div className="_content">
+                    无设备提醒
+                </div>
+                <Link to={'/demo/0'}>
+                    <div className="_footer app-active-font32">
+
+                        去添加
+
+                    </div>
+                </Link>
+
+            </div>,
+            footer: <div className="footer">
+                <img src={footer} className="app-all-img"/>
+            </div>
+
+        };
+
+
+        this.modelConfigBabyState0={
+            model_content_contnet:true,
+            header: <div className="header">
+
+                <img src={header} className="app-all-img"/>
+
+
+            </div>,
+            content: <div className="content app-padding-lr20">
+
+                <div className="_header app-active-font32">
+                    实名认证
+                </div>
+                <div className="_content step app-666-font24" style={{flexDirection:'column'}}>
+                    <div>尊敬的学生家长</div>
+                    <div>根据工信部电话实名制要求，为保证智能学生证正常使用，请于1月15日之前办理，逾期将无法正常使用。为此给您带来的不便敬请谅解，感谢您的支持！</div>
+                </div>
+                <div className="_footer step">
+
+
+
+                    <div className="s-flex1 s-j-end app-666-font32" onClick={this.no.bind(this)}>下次提醒</div>
+
+                    <div className="app-padding-lr50"></div>
+
+
+                    <div className="s-flex1 app-active-font32" onClick={this.authen.bind(this)}>去认证</div>
+
+                </div>
+
+            </div>,
+            footer: <div className="footer">
+                <img src={footer} className="app-all-img"/>
+            </div>
+
+        };
+
+        this.modelConfigBabyState1={
+            model_content_contnet:true,
+            header: <div className="header">
+
+                <img src={header} className="app-all-img"/>
+
+
+            </div>,
+            content: <div className="content app-padding-lr20">
+
+                <div className="_header app-active-font32">
+                    实名认证
+                </div>
+                <div className="_content step app-666-font24" style={{flexDirection:'column'}}>
+                   <div>您的实名认证正在认证中，我们将尽快为您处理，请耐心等待</div>
+                     </div>
+                <div className="_footer step">
+
+
+
+                    <div className="s-center app-active-font32" onClick={this.no1.bind(this)}>我知道了</div>
+
+                </div>
+
+            </div>,
+            footer: <div className="footer">
+                <img src={footer} className="app-all-img"/>
+            </div>
+
+        };
+
+        this.modelConfigBabyState2={
+            model_content_contnet:true,
+            header: <div className="header">
+
+                <img src={header} className="app-all-img"/>
+
+
+            </div>,
+            content: <div className="content app-padding-lr20">
+
+                <div className="_header app-hong-font32">
+                    实名认证不通过
+                </div>
+                <div className="_content step app-666-font24" style={{flexDirection:'column'}}>
+                    <div>姓名和身份证不匹配，身份证正面照片不合格，身份证反面照片不合格</div>
+                </div>
+                <div className="_footer step">
+
+
+
+                    <div className="s-flex1 s-j-end app-666-font32" onClick={this.no2.bind(this)}>下次提醒</div>
+
+                    <div className="app-padding-lr50"></div>
+
+
+                    <div className="s-flex1 app-active-font32" onClick={this.authen.bind(this)}>去认证</div>
+
+                </div>
+
+            </div>,
+            footer: <div className="footer">
+                <img src={footer} className="app-all-img"/>
+            </div>
+
+        }
+        this.modelConfigBabyState3={
+            model_content_contnet:true,
+            header: <div className="header">
+
+                <img src={header} className="app-all-img"/>
+
+
+            </div>,
+            content: <div className="content app-padding-lr20">
+
+                <div className="_header app-active-font32">
+                    实名认证
+                </div>
+                <div className="_content step app-666-font24" style={{flexDirection:'column'}}>
+                    <div>因本设备管理逾期未进行实名认证，先已无法正常使用，请联系设备管理员进行实名认证</div>
+                </div>
+                <div className="_footer step">
+
+
+
+                    <div className="s-center app-active-font32" onClick={this.no3.bind(this)}>我知道了</div>
+
+                </div>
+
+            </div>,
+            footer: <div className="footer">
+                <img src={footer} className="app-all-img"/>
+            </div>
+
+        }
 
 
     }
 
+    no(){
+        this.setState({
+            model:Tool.assign({},this.state.model,{flag:false})
+        })
+
+    }
+    no1(){
+        this.setState({
+            model:Tool.assign({},this.state.model,{flag1:false})
+        })
+
+    }
+    no2(){
+        this.setState({
+            model:Tool.assign({},this.state.model,{flag2:false})
+        })
+
+    }
+    no3(){
+        this.setState({
+            model:Tool.assign({},this.state.model,{flag3:false})
+        })
+
+    }
+
+    authen(){
+        this.context.router.push('/authen/'+this.state.babyInfo.telephone)
+    }
+
 
     componentWillMount() {
-        // window.localStorage.delDevice=false;//是否解绑过设备
+        // window.localStorage.delDevice=0;//是否解绑过设备
 
-        window.localStorage.sid1 = this.props.params.sid.replace("+", "%2B").replace(" ", "%20").replace(/\//g, "%2F");
 
-        console.log(this.props)
+        // if(!this.props.params.babyid){
+        //     this.props.doLogin2(this.props.params.token,this.props.params.userid,this);
+        //
+        //
+        // }
 
-        if (!this.props.babyid) {
 
-            console.log(this)
-            //   alert('没值')
+        if(localStorage.delDevice==1){
+            this.props.getOneBabyid();
+        }else if(!!this.props.babyid){
 
-            this.props.doLogin2(this.props.params.sid,this.props.params.userid,this);
-
-        } else {
-            //是否改变过宝贝 1改了 0没改变
-
-            if (localStorage.delDevice != 1) {
-
-                this.props.getMap(this.props.babyid)
-
-            } else {
-                this.props.getOneBabyid();
-            }
-
+            this.props.getMap(this.props.babyid)
         }
+
 
 
         if (this.state.isOpen == false) {
@@ -154,7 +364,9 @@ class MapIndex extends React.Component {
     }
 
 
-    _change(babyname, babyid, headimg, babytelephone, e) {
+    _change(babyname, babyid,authstatus, headimg, babytelephone, e) {
+        localStorage.is='0';
+
         e.preventDefault();
 
         this.setState({
@@ -163,6 +375,7 @@ class MapIndex extends React.Component {
 
         const data = {
             babyname: babyname,
+            authstatus: authstatus,
             babyid: babyid,
             babytelephone: babytelephone,
             headimg: headimg,
@@ -193,7 +406,9 @@ class MapIndex extends React.Component {
             data: {
                 familystatus: f,
                 babyid: this.props.babyid,
-                token: localStorage.appToken
+                token: localStorage.appToken,
+                weixinclient:'true'
+
             },
             success: (res => {
 
@@ -201,6 +416,7 @@ class MapIndex extends React.Component {
                 if (res.code == '10042') {
 
                     console.log(res);
+                    Toast.toast(res.msg, 3000);
 
 
                     this.props.changeSaveBabyStatus(false);
@@ -220,8 +436,6 @@ class MapIndex extends React.Component {
     getLocation() {
 
         this.props.getMap(this.props.babyid);
-
-        // this.init(116.397428, 39.90923)
     }
 
 
@@ -243,15 +457,86 @@ class MapIndex extends React.Component {
 
     }
 
+    getBaby(id){
+        HttpService.query({
+            url: '/app/object/getBaby',
+            data: {
+                token: localStorage.appToken,
+                babyid: id,
+                weixinclient:'true'
+            },
+            success: (res=> {
+                console.log(res);
+                if (res.code == '10038') {
+                    this.setState({
+                        babyInfo: {
+                            mdtid: res.data.mdtid,
+                            telephone: res.data.telephone,
+                            endTime: res.data.endtime,
+                            userid: res.data.userid,
+                            isadmin: res.data.isadmin,
+                            authstatus:res.data.authstatus
+                        }
+                    });
+
+                   // alert(this.state.babyInfo.telephone)
+                }
+            })
+        })
+    }
+
+    componentWillReceiveProps(nextProps,nextState){
+       if(localStorage.is=='0'){
+         //   alert('来了')
+           this.getBaby(this.props.babyid);
+       }else{
+           return
+       }
+
+
+        setTimeout(()=>{
+            const {babyInfo} =this.state;
+            if(babyInfo.authstatus==0&&babyInfo.isadmin==true){
+                localStorage.is='1';
+                this.setState({
+                    model:Tool.assign({},this.state.model,{flag:true}),
+                })
+            }else if(babyInfo.authstatus==1&&babyInfo.isadmin==true){
+                localStorage.is='1';
+                this.setState({
+                    model:Tool.assign({},this.state.model,{flag1:true}),
+                })
+            }else if(babyInfo.authstatus==2&&babyInfo.isadmin==true){
+                localStorage.is='1';
+                this.setState({
+                    model:Tool.assign({},this.state.model,{flag2:true}),
+
+                })
+            }else if(babyInfo.authstatus==0&&babyInfo.isadmin==false){
+                localStorage.is='1';
+                this.setState({
+                    model:Tool.assign({},this.state.model,{flag3:true}),
+
+                })
+            }
+        },1000);
+
+        //
+        // this.getBaby(this.props.babyid)
+
+
+
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return true;
+        }
+
     render() {
 
         const getCurrenttime = GetCurrentDate.time();
 
-        const {babyName, babytelephone, list, babyid, headimg, values, lng, lat, gpstime, getGuardiansList, _checked, relationList, address, isLogin, datasource}=this.props;
-
-        console.log(this.props.exportMap);
-
-
+        const {babyName, babytelephone, list, authstatus, babyid, headimg, values, lng, lat, gpstime, getGuardiansList, _checked, relationList, address, isLogin, datasource}=this.props;
         var isOpen = this.state.isOpen;
         var mapHeight = this.state.mapHeight;
         const mapBottom = this.state.mapBottom;
@@ -278,7 +563,7 @@ class MapIndex extends React.Component {
         let listItem = list.map((json, index) => {
             return (
                 <div className="device-info" key={index}
-                     onClick={this._change.bind(this, json.babyname, json.babyid, json.headimg, json.babytelephone)}>
+                     onClick={this._change.bind(this, json.babyname, json.babyid, json.authstatus, json.headimg, json.babytelephone)}>
                     <div className="headimg">
 
                         {
@@ -302,11 +587,17 @@ class MapIndex extends React.Component {
             )
         });
 
+        const {model} =this.state;
+
 
         return (
+
+
             <div>
 
                 {/*设备切换*/}
+
+
 
                 {
                     checked == true ?
@@ -333,29 +624,14 @@ class MapIndex extends React.Component {
                 }
 
                 {/*是否有设备*/}
-                <div style={{display: _checked == 'true' ? 'block' : 'none'}}>
-                    <div className="add-device">
-                    </div>
 
-                    <div className="add-device-content">
-                        <div className="content">
-                            <div style={{width: '20rem', height: '25rem', position: 'relative'}}>
-
-                                <img src={sb} style={{width: '20rem', height: '25rem'}}/>
-
-                                <Link to="/AddDevice">
-                                    <div className="_btn btn_btn">添加设备</div>
-                                </Link>
-
-                            </div>
+                <Model modelConfig={this.modelConfigBabyNone} flag={_checked}/>
 
 
-                        </div>
-
-                    </div>
-
-
-                </div>
+                <Model modelConfig={this.modelConfigBabyState0} flag={model.flag}/>
+                <Model modelConfig={this.modelConfigBabyState2} flag={model.flag2}/>
+                <Model modelConfig={this.modelConfigBabyState1} flag={model.flag1}/>
+                <Model modelConfig={this.modelConfigBabyState3} flag={model.flag3}/>
 
 
                 {/*未登录*/}
@@ -589,7 +865,7 @@ class MapIndex extends React.Component {
                                 </Link>
                             </div >
                             <div className="option">
-                                <Link to="/demo">
+                                <Link to="/demo/0">
                                     <img src={tianjia} style={{width: '2.3rem', height: '2.3rem'}}/>
                                     <div>添加设备</div>
                                 </Link>
@@ -641,6 +917,7 @@ const mapStateToProps = state => {
         list: state.login.list,
         babyName: state.login.babyName,
         babyid: state.login.babyid,
+        authstatus: state.login.authstatus,
         babytelephone: state.login.babytelephone,
         headimg: state.login.headimg,
         values: state.login.values,

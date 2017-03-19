@@ -353,7 +353,8 @@ export default class Addarea extends React.Component {
                 regionid: '',
                 address: this.state.address,
                 radius: this.state.radius,
-                name: this.refs.name.value
+                name: this.refs.name.value,
+                weixinclient:'true'
             };
             this.saveSafeRegion(data);
         } else {
@@ -365,7 +366,8 @@ export default class Addarea extends React.Component {
                 regionid: this.props.params.regionid,
                 radius: this.state.radius,
                 address: this.state.address,
-                name: this.refs.name.value
+                name: this.refs.name.value,
+                weixinclient:'true'
             };
             this.saveSafeRegion(data2);
         }
@@ -380,9 +382,7 @@ export default class Addarea extends React.Component {
             success: (res=> {
                 console.log(res);
                 if (res.code = '10044') {
-
                     this.state.map.clearMap();
-
                     this.context.router.goBack();
                     window.localStorage.saveSafeRegion=true;
                     //window.location.href = '#/Safetyarea/' + localStorage.babyid + '';

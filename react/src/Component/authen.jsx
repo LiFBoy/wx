@@ -13,6 +13,8 @@ import Model from './common/model'
 
 import reason from '../img/more/reason.png'
 
+import {HttpService,Toast,Tool} from '../utils'
+
 class Authen extends React.Component{
     constructor(){
         super();
@@ -22,10 +24,11 @@ class Authen extends React.Component{
 
             },
 
+            uploadImg:{
+
+            }
+
         };
-
-
-
         this.modelConfig={
 
             model_content:true,
@@ -72,6 +75,8 @@ class Authen extends React.Component{
     }
 
 
+
+
     know(){
         this.setState({
             model:{
@@ -93,15 +98,104 @@ class Authen extends React.Component{
 
     }
 
+    uploadImgFromAlbum(cb) {
+    wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (preRes) {
+            wx.uploadImage({
+                localId: preRes.localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (mediaRes) {
+                    return cb(preRes.localIds[0], mediaRes.serverId)
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            });
+        },
+        fail: function (res) {
+            alert(JSON.stringify(res));
+        }
+    });
+}
+
+    deleteImg(type){
+        if(type==1){
+            this.setState({
+                uploadImg:Tool.assign({},this.state.uploadImg,{localIds:''})
+
+            });
+        }else{
+            this.setState({
+                uploadImg:Tool.assign({},this.state.uploadImg,{localIdsBack:''})
+
+            });
+        }
+
+    }
+
+    uploadImgBack(){
+
+        this.uploadImgFromAlbum((localIds,serverId)=>{
+
+            wx.getLocalImgData({
+                localId: localIds, // 图片的localID
+                success:  (res)=> {
+                    var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                    this.setState({
+                        uploadImg: Tool.assign({},this.state.uploadImg,{localIdsBack:localData})
+                    });
+                }
+            });
+
+        })
+
+    }
+
+    uploadImg(){
+
+        this.uploadImgFromAlbum((localIds,serverId)=>{
+
+            wx.getLocalImgData({
+                localId: localIds, // 图片的localID
+                success:  (res)=> {
+                    var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                    this.setState({
+                        uploadImg:Tool.assign({},this.state.uploadImg,{localIds:localData})
+
+                    });
+                }
+            });
+
+        })
+
+
+    }
+
+
+    async auth(){
+
+        const code=await HttpService.save({
+            url:"/app/user/auth",
+            data:{
+                token:localStorage.localStorage.appToken,
+                devicetelephone:this.props.params.phone,
+                username:'李建彬',
+                idcard:'362429199411025317',
+            }
+        })
+
+    }
+
     render(){
-        const {model} =this.state;
+        const {model,uploadImg} =this.state;
         return (
             <div className="app-container">
 
                 <R_header left="1" title="选择设备类型" right="3" auSeason={this.reason.bind(this)}/>
                 <Model modelConfig={this.modelConfig} flag={model.flag}/>
-
-
                 <div className="app-margin-tb20">
                     <div className="step app-white-chunk border-bottom">
                         <div className="s-flex-zero app-padding-lr24">
@@ -130,9 +224,23 @@ class Authen extends React.Component{
                     <div className="step s-flex-d">
                         <div className="app-textAlgin app-333-font24">正面照片</div>
                         <div className="card">
-                            <div className="app-upload">上传</div>
-                            <div className="app-delete">删除</div>
-                            <img src={cardfont} className="app-all-img"/>
+                            {
+                                !!uploadImg.localIds?<div className="app-delete" onClick={this.deleteImg.bind(this,1)}>删除</div>:
+                                    <div className="app-upload" onClick={this.uploadImg.bind(this)}>上传</div>
+                            }
+
+
+                            {/*<img src="wxLocalResource://511604193101380" className="app-all-img"/>*/}
+
+                            <div style={{height:'100px'}}>
+                            {
+                                !!uploadImg.localIds?<img src={uploadImg.localIds} className="app-all-img"/>:
+                                    <img src={cardfont} className="app-all-img"/>
+                            }
+
+                            </div>
+                            {/*<img src={cardback} className="app-all-img"/>*/}
+
                         </div>
                     </div>
                 </div>
@@ -140,15 +248,31 @@ class Authen extends React.Component{
                     <div className="s-flex1">
                         <div className="step s-flex-d">
                             <div className="app-textAlgin app-333-font24">反面照片</div>
-                            <div>
-                                <img src={cardfont} className="app-all-img"/>
+                            <div className="card">
+                                {
+                                    !!uploadImg.localIdsBack?<div className="app-delete" onClick={this.deleteImg.bind(this,2)}>删除</div>:
+                                        <div className="app-upload" onClick={this.uploadImgBack.bind(this)}>上传</div>
+                                }
+
+
+                                {/*<img src="wxLocalResource://511604193101380" className="app-all-img"/>*/}
+
+                                <div style={{height:'100px'}}>
+                                    {
+                                        !!uploadImg.localIdsBack?<img src={uploadImg.localIdsBack} className="app-all-img"/>:
+                                            <img src={cardback} className="app-all-img"/>
+                                    }
+
+                                </div>
+                                {/*<img src={cardback} className="app-all-img"/>*/}
+
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <div className="app-yellow-radius-check-button app-btn app-margin-lr40 app-margin-t30" >
+                <div className="app-yellow-radius-check-button app-btn app-margin-lr40 app-margin-t30" onClick={this.auth.bind(this)}>
                     {/*<input className="s-center" type="submit" readOnly="readOnly" value="登录"/>*/}
 
                     <div className="s-center">提交认证审核</div>
@@ -158,4 +282,7 @@ class Authen extends React.Component{
     }
 
 }
+
+
+
 export default  Authen;

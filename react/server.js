@@ -20,17 +20,19 @@ var proxy = [
     {
         path: '/app/*',
         target: 'http://api.17find.com/',
-        host: '222.46.27.218:8800'
+        host: 'api.17find.com'
+    },
+    {
+        path: '/thirdparty/*',
+        target: 'http://api.17find.com/',
+        host: 'api.17find.com'
     },
     {
         path: '/app/*',
         target: 'http://wx.17find.com/',
-        host: '222.46.27.218:8800'
-    }, {
-        path: '/app/*',
-        target: 'http://222.46.27.218:8800',
-        host: '222.46.27.218:8800'
+        host: 'api.17find.com'
     },
+
 
     {
         path: '/operationapp/*',
@@ -41,6 +43,12 @@ var proxy = [
         path: '/media/*',
         target: 'http://222.46.27.218:8800',
         host: '222.46.27.218:8800'
+    },
+
+    {
+        path:'/cgi-bin/*',
+        target:'https://api.weixin.qq.com',
+        host:'https://api.weixin.qq.com'
     }
 ];
 

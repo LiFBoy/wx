@@ -6,7 +6,8 @@ import {R_header} from './common/index';
 import {HttpService, Toast}  from'../Http';
 
 
-import { Link} from 'react-router';
+//import { Link} from 'react-router';
+import Link from './common/Link'
 
 
 import endtime from '../img/more/endtime.png'
@@ -69,6 +70,7 @@ export default class More extends React.Component {
             data: {
                 token: localStorage.appToken,
                 babyid: this.props.params.babyid,
+                weixinclient:'true'
             },
             success: (res=> {
                 console.log(res)
@@ -80,7 +82,8 @@ export default class More extends React.Component {
                             telephone: res.data.telephone,
                             endTime: res.data.endtime,
                             userid: res.data.userid,
-                            isadmin: res.data.isadmin
+                            isadmin: res.data.isadmin,
+                            telephone:res.data.telephone
                         }
                     })
                 }
@@ -139,7 +142,10 @@ export default class More extends React.Component {
                 console.log(res);
                 if (res.code == '10112') {
 
-                    window.localStorage.delDevice = true;
+                    window.localStorage.delDevice = 1;
+
+
+
 
 
                     this.context.router.push('/map/' +localStorage.appToken+'/'+localStorage.userid);
@@ -198,7 +204,7 @@ export default class More extends React.Component {
                         <div className="mdtid" style={{lineHeight:'2rem'}}>设备IMEI号:{info.mdtid}</div>
                     </div>
 
-                    <Link to={'/authen'}>
+                    <Link to={'/authen/'+info.telephone}>
 
                     <div className="shiming app-margin-tb20">
                         <div className="img">

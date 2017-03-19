@@ -66,11 +66,12 @@ class register extends React.Component {
 
         const pwd=this.refs.pwd.value;
         const result=await HttpService.save({
-            url:'/app/user/logon?weixinclient=true',
+            url:'/app/user/logon',
             data:{
                 account:val,
                 smscode:code,
-                password:pwd
+                password:pwd,
+                weixinclient:'true'
             }
         });
 
@@ -97,18 +98,20 @@ class register extends React.Component {
             return;
         }
             let code = await HttpService.save({
-                url: "/app/user/checkTelephone?weixinclient=true",
-                data: {account: phone}
+                url: "/app/user/checkTelephone",
+                data: {account: phone,weixinclient:'true'}
             });
             console.log(code);
 
             if(code.code==10003){
 
                 const code=await HttpService.save({
-                    url:'/app/user/generateSMSCode?weixinclient=true',
+                    url:'/app/user/generateSMSCode',
                     data:{
                         account: phone,
-                        module:'reg'
+                        module:'reg',
+                        weixinclient:'true'
+
                     }
                 });
 

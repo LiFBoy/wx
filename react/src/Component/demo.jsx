@@ -91,11 +91,11 @@ export default class Demo extends React.Component {
         const {x} =this.state;
       //  alert(x)
         if(x==0){
-            this.context.router.push('/adddevice/0');
+            this.context.router.push(`/adddevice/0/${this.props.params.type}`);
         }else if(x==1){
-            this.context.router.push('/adddevice/1');
+            this.context.router.push(`/adddevice/1/${this.props.params.type}`);
         }else if(x==2){
-            this.context.router.push('/adddevice/2');
+            this.context.router.push(`/adddevice/2/${this.props.params.type}`);
         }
 
     }

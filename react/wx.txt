@@ -1,0 +1,48 @@
+
+
+第一步获取access_token(传给第二步)
+
+http请求方式: GET
+https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+参数说明
+
+参数	是否必须	说明
+grant_type	是	获取access_token填写client_credential
+appid	是	第三方用户唯一凭证
+secret	是	第三方用户唯一凭证密钥，即appsecret
+返回说明
+
+第二步获取 jsapi_ticket（也就是json下的ticket）
+
+    https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
+
+    成功返回如下JSON：
+
+    {
+    "errcode":0,
+    "errmsg":"ok",
+    "ticket":"bxLdikRXVbTPdHSM05e5u5sUoXNKd8-41ZO3MhKoyN5OfkWITDGgnr2fwJ0m9E8NYzWKVZvdVtaUgWvsdshFKA",
+    "expires_in":7200
+    }
+
+
+
+第三步 签名
+
+    jsapi_ticket 通过 getticket 接口获取的 JSAPI 调用凭证
+    noncestr  随机生成的字符串 （这个你后端自己生成）
+    timestamp  当前时间戳（单位：秒） （这个我传给你，再回传给我）
+    url  需要调用 JS 接口的 URL
+
+    这四个参数生成 signature
+
+
+    我这边把 timeStamp，url传你，你返回  appId  timestamp  nonceStr  signature 就行
+
+
+
+
+
+
+
+

@@ -51,21 +51,21 @@ const RouteConfig = (
             <Route path="/register" component={register} />
             <Route path="/ForgetPwd" component={ForgetPwd} />
             <Route path="/about/:babyid/:lng/:lat" component={About} />
-            <Route path="/map/:sid/:userid" component={MapIndex} />
+            <Route path="/map/:token/:userid" component={MapIndex} />
             <Route path="/deviceList" component={DeviceList} />
-            <Route path="/addDevice/:type" component={AddDevice} />
-            <Route path="/Gotoactive/:telephone/:mdtid" component={Gotoactive} />
+            <Route path="/addDevice/:type/:code" component={AddDevice} />
+            <Route path="/Gotoactive/:telephone/:mdtid/:code" component={Gotoactive} />
             <Route path="/VerifyText/:admintelephone/:mdtid/:deviceid/:telephone" component={VerifyText} />
             <Route path="/Success/:time" component={Success} />
             <Route path="/App/:babyid" component={App} />
             <Route path="/Safetyarea/:babyid" component={Safetyarea}/>
             <Route path="/Addarea/:regionid/:radius/:centerlng/:centerlat/:name" component={Addarea}/>
-            <Route path="/demo" component={Demo}/>
+            <Route path="/demo/:type" component={Demo}/>
             <Route path="/Guardian/:babyid" component={Guardian}/>
             <Route path="/AddGuardian/:babyid/:guardianid/:familystatus" component={AddGuardian}/>
             <Route path="/More/:babyid" component={More}/>
             <Route path="/model" component={model}/>
-            <Route path="/authen" component={Authen}/>
+            <Route path="/authen/:phone" component={Authen}/>
     </Router>
 );
 

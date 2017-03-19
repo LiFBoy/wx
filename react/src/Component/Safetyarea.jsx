@@ -6,7 +6,8 @@ import ReactDOM, {render} from 'react-dom';
 import {R_header_fixed} from './common/index';
 import {HttpService, Toast}  from'../Http';
 
-import {Link} from 'react-router';
+//import {Link} from 'react-router';
+import Link from './common/Link'
 
 import {getSafeRegions} from '../action/index'
 
@@ -372,6 +373,7 @@ class Safetyarea extends React.Component {
                 token: localStorage.appToken,
                 babyid: this.props.params.babyid,
                 regionids: regionid,
+                weixinclient:'true'
             },
             success: (res=> {
 
@@ -410,7 +412,8 @@ class Safetyarea extends React.Component {
                 token: localStorage.appToken,
                 babyid: this.props.params.babyid,
                 pageindex: 1,
-                pagesize: 50
+                pagesize: 50,
+                weixinclient:'true'
             },
             success: (res=> {
 

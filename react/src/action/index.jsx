@@ -272,6 +272,7 @@ export function change(res) {
     // window.localStorage.babyid = res.babyid;
 
     const data = {
+        authstatus:res.authstatus,
         babyName: res.babyname,
         babyid: res.babyid,
         babytelephone: res.babytelephone,
@@ -284,7 +285,7 @@ export function change(res) {
         dispatch(Change(data));
         dispatch(getCurrentPower(data.babyid));
         dispatch(getCurrentTrack(data.babyid));
-        dispatch(getAuthInfo(data.babytelephone))
+      //  dispatch(getAuthInfo(data.babytelephone))
     }
 }
 
@@ -365,6 +366,7 @@ export function doLogin2(token,userid,component) {
         window.localStorage.appToken = token;
 
         window.localStorage.userid = userid;
+        window.localStorage.is = '0';
 
         dispatch(getDeviceList(component));
 
@@ -437,32 +439,32 @@ export function getMap(babyid) {
 export function getOneBabyid() {
     return function (dispatch) {
         return HttpService.query({
-            url: '/app/object/getBabys?weixinclient=true',
-            data: {token: localStorage.appToken},
+            url: '/app/object/getBabys',
+            data: {token: localStorage.appToken,weixinclient:'true'},
             success: (res=> {
 
                 console.log(res);
-
-
                 if (res.code == 10020) {
 
                     dispatch(getA(res.data[0].babyid, res.data));
-
-
-
                     dispatch(getCurrentPower(res.data[0].babyid));
-
 
                     dispatch(getCurrentTrack(res.data[0].babyid));
 
-                    dispatch(getChecked('false'));
+                    dispatch(getChecked(false));
 
                     dispatch(GetDeviceList(res.data));
 
 
-                } else {
+                } else if(res.code==401) {
 
-                    dispatch(getChecked('true'));
+
+                }else if(res.code==10019){
+
+                    alert('没值了');
+
+                 //   dispatch(GetDeviceList(res.data));
+                    dispatch(getChecked(true));
                 }
             })
         })
@@ -505,19 +507,18 @@ export function getDeviceList(component) {
                     dispatch(getAuthInfo(res.data[0].babytelephone))
 
 
-                } else {
+                } else if(res.code==401) {
 
                  //   alert(11)
 
                     console.log(component);
 
-                    component.context.router.push('/demo');
-
-
 
                     //dispatch(getChecked('true'));
 
 
+                }else{
+                    component.context.router.push('/demo/0');
                 }
             })
         })
@@ -872,37 +873,56 @@ function init(lng, lat) {
 }
 
 
-export function scanDevice(mdtcode,frequent) {
+export function scanDevice(component,mdtcode,frequent,code) {
+
+    console.log(code)
 
 
     return function (dispatch) {
 
+        if(code==100073){
+
+            component.url='/app/user/logon2'
+
+        }else if(code==0){
+
+            component.url='/app/device/scanDevice'
+
+        }
 
         return HttpService.query({
-            url: '/app/device/scanDevice',
+            url: component.url,
 
             data: {token: localStorage.appToken, mdtcode: mdtcode, mdtid: mdtcode,weixinclient:'true',frequent:frequent},
 
 
             success: (res=> {
 
-
-                if (res.code == 100783) {
-
+                console.log(res);
+                if (res.code == 100783||res.code==100064) {
                     const telephone = res.data.telephone;
                     const mdtid = res.data.mdtid;
+                      // window.location.href = '/index.html#Gotoactive/' + telephone + '/' + mdtid + '';
 
-                  //  window.location.href = '/index.html#Gotoactive/' + telephone + '/' + mdtid + '';
+                    component.context.router.push(`/Gotoactive/${telephone}/${mdtid}/${code}`);
 
 
                 } else if (res.code == 10078) {
+
+                    //非管理员添加
 
                     const admintelephone = res.data.admintelephone;
                     const mdtid = res.data.mdtid;
                     const deviceid = res.data.deviceid;
                     const telephone = res.data.telephone;
 
-               //     window.location.href = '/index.html#VerifyText/' + admintelephone + '/' + mdtid + '/' + deviceid + '/' + telephone + '';
+
+                    component.context.router.push(`/VerifyText/${admintelephone}/${mdtid}/${deviceid}/${telephone}`);
+
+
+
+
+                    // window.location.href = '/index.html#VerifyText/' + admintelephone + '/' + mdtid + '/' + deviceid + '/' + telephone + '';
 
                 } else {
 
@@ -913,6 +933,9 @@ export function scanDevice(mdtcode,frequent) {
 
             })
         })
+
+
+
     }
 }
 

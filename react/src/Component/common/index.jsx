@@ -1,7 +1,7 @@
 'usr strict';
 import React, {Component, PropTypes} from 'react';
-import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
-
+//import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
+import Link from './Link'
 import back from '../../img/back.png'
 import reason from '../../img/more/reason.png'
 

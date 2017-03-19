@@ -14,7 +14,7 @@
     "classnames": "^2.2.5",
     "html-webpack-plugin": "^2.22.0",
     "react-redux": "^4.4.5",
-    "react-router": "^4.0.0",
+    "react-router": "^2.5.2",
     "react-swipe": "^5.0.6",
     "react-swipes": "^1.0.4",
     "redux-thunk": "^2.1.0",

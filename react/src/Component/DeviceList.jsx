@@ -4,7 +4,7 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM, {render} from 'react-dom';
 
 import {R_header} from './common/index';
-import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
+//import {Router, Route, IndexRoute, hashHistory, browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 
 import {bindActionCreators} from 'redux';
@@ -12,6 +12,8 @@ import {bindActionCreators} from 'redux';
 import {getDeviceList, change} from '../action/index'
 
 import '../less/deviceList.less'
+
+import Link from './common/Link'
 
 class DeviceList extends React.Component {
     constructor(props) {
