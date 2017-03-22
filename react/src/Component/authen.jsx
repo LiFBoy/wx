@@ -184,6 +184,8 @@ class Authen extends React.Component{
                 devicetelephone:this.props.params.phone,
                 username:'李建彬',
                 idcard:'362429199411025317',
+                front:[],
+                back:[]
             }
         })
 

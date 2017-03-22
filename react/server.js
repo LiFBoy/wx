@@ -63,7 +63,8 @@ server.app.get('*', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 });
 
-server.listen(9527,'172.27.35.6');
+// server.listen(9527,'172.27.35.6');
+server.listen(9527,'30.6.48.161');
 
 
 

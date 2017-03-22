@@ -18,6 +18,7 @@
     "react-swipe": "^5.0.6",
     "react-swipes": "^1.0.4",
     "redux-thunk": "^2.1.0",
+    "rxjs": "^5.2.0",
     "scss-loader": "0.0.1",
     "swipe-js-iso": "^2.0.3",
     "webpack-px-to-rem": "^0.1.0"

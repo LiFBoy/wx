@@ -23,6 +23,7 @@ import register from './Component/register'
 import ForgetPwd from './Component/ForgetPwd'
 import model from './Component/common/model'
 import Authen from './Component/authen'
+import Ldemo from './Component/Ldemo'
 
 
 /**
@@ -66,6 +67,7 @@ const RouteConfig = (
             <Route path="/More/:babyid" component={More}/>
             <Route path="/model" component={model}/>
             <Route path="/authen/:phone" component={Authen}/>
+            <Route path="/Ldemo" component={Ldemo}/>
     </Router>
 );
 
