@@ -14,6 +14,9 @@ class Link extends React.Component {
 
 
     go(){
+        if(this.props.authstatus=='1'||this.props.authstatus=='3'){
+            return;
+        }
         this.context.router.push(this.props.to)
     }
 

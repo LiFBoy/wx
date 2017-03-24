@@ -10,9 +10,9 @@
 
 
 .flipsnap {
-  width: 1310px;
+  width: 1334px;
   /* 400(item) * 3 + 45px(padding)  690 */
-  padding-left: 110px;
+  padding-left: 134px;
   box-sizing: border-box;
 }
 

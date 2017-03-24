@@ -83,7 +83,8 @@ export default class More extends React.Component {
                             endTime: res.data.endtime,
                             userid: res.data.userid,
                             isadmin: res.data.isadmin,
-                            telephone:res.data.telephone
+                            authstatus:res.data.authstatus,
+                            deviceType:res.data.deviceType
                         }
                     })
                 }
@@ -144,10 +145,7 @@ export default class More extends React.Component {
 
                     window.localStorage.delDevice = 1;
 
-
-
-
-
+                    window.localStorage.is=='0'
                     this.context.router.push('/map/' +localStorage.appToken+'/'+localStorage.userid);
 
 
@@ -176,6 +174,7 @@ export default class More extends React.Component {
                 if (res.code == '10070') {
 
                     window.localStorage.delDevice = 1;
+                    window.localStorage.is=='0';
                     // window.location.href = '/index.html#/map/' + localStorage.sid1 + '';
 
                     this.context.router.push('/map/' +localStorage.appToken+'/'+localStorage.userid);
@@ -204,16 +203,29 @@ export default class More extends React.Component {
                         <div className="mdtid" style={{lineHeight:'2rem'}}>设备IMEI号:{info.mdtid}</div>
                     </div>
 
-                    <Link to={'/authen/'+info.telephone}>
+                    {
 
-                    <div className="shiming app-margin-tb20">
-                        <div className="img">
-                            <img src={shiming} />
-                        </div>
-                        <div className="input">sim卡实名认证</div>
-                        <div></div>
-                    </div>
-                    </Link>
+                        info.deviceType=='2'&&info.isadmin?
+                        <Link to={'/authen/'+info.telephone} authstatus={info.authstatus}>
+
+                            <div className="shiming app-margin-tb20">
+                                <div className="img">
+                                    <img src={shiming} />
+                                </div>
+                                <div className="input">sim卡实名认证</div>
+                                <div className="select">
+
+                                    {
+                                        info.authstatus==0? <span>未认证</span>:
+                                            info.authstatus=='1'? <span>认证中</span>:
+                                                info.authstatus=='2'? <span>认证不通过</span>:
+                                                    info.authstatus=='3'? <span>已认证</span>:''
+                                    }
+
+                                </div>
+                            </div>
+                        </Link>:''
+                    }
 
                     <div className="phone" style={{borderTop: '1px solid #EEEEEE'}}>
 

@@ -128,8 +128,8 @@
         self.threshold = opts.threshold || 0;
 
         // set property
-        self.currentPoint = 0;// 当前的Point
-        self.currentX = 0;
+        self.currentPoint = 1;// 当前的Point
+        self.currentX = 250;
         self.animation = false;
         self.timerId = null;
         self.use3d = support.transform3d;

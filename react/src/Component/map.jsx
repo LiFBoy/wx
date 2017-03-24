@@ -32,6 +32,7 @@ import dian1 from '../../src/img/didianliang.png'
 import dian from '../../src/img/lixian.png'
 
 import lishiguiji from '../../src/img/lishiguiji.png'
+import banji from '../../src/img/banji.png'
 
 
 import wifi from '../../src/img/wifi.png'
@@ -76,7 +77,6 @@ import  genghuan from '../../src/img/genghuan.png'
 import  jiebang from '../../src/img/jiebang.png'
 
 import kaoqin from '../../src/img/kaoqin.png'
-import lsb from '../../src/img/bind/lsb.png'
 
  import Model from './common/model'
 
@@ -473,9 +473,15 @@ class MapIndex extends React.Component {
                             mdtid: res.data.mdtid,
                             telephone: res.data.telephone,
                             endTime: res.data.endtime,
+                            babyname:res.data.babyname,
                             userid: res.data.userid,
                             isadmin: res.data.isadmin,
-                            authstatus:res.data.authstatus
+                            authstatus:res.data.authstatus,
+                            deviceType:res.data.deviceType,
+                            headimg:res.data.headimg,
+                            babytelephone:res.data.babytelephone,
+                            babyid:res.data.babyid
+
                         }
                     });
 
@@ -486,6 +492,7 @@ class MapIndex extends React.Component {
     }
 
     componentWillReceiveProps(nextProps,nextState){
+        debugger;
        if(localStorage.is=='0'){
          //   alert('来了')
            this.getBaby(this.props.babyid);
@@ -496,23 +503,23 @@ class MapIndex extends React.Component {
 
         setTimeout(()=>{
             const {babyInfo} =this.state;
-            if(babyInfo.authstatus==0&&babyInfo.isadmin==true){
+            if(babyInfo.authstatus==0&&babyInfo.isadmin==true&&babyInfo.deviceType=='2'){
                 localStorage.is='1';
                 this.setState({
                     model:Tool.assign({},this.state.model,{flag:true}),
                 })
-            }else if(babyInfo.authstatus==1&&babyInfo.isadmin==true){
+            }else if(babyInfo.authstatus==1&&babyInfo.isadmin==true&&babyInfo.deviceType=='2'){
                 localStorage.is='1';
                 this.setState({
                     model:Tool.assign({},this.state.model,{flag1:true}),
                 })
-            }else if(babyInfo.authstatus==2&&babyInfo.isadmin==true){
+            }else if(babyInfo.authstatus==2&&babyInfo.isadmin==true&&babyInfo.deviceType=='2'){
                 localStorage.is='1';
                 this.setState({
                     model:Tool.assign({},this.state.model,{flag2:true}),
 
                 })
-            }else if(babyInfo.authstatus==0&&babyInfo.isadmin==false){
+            }else if(babyInfo.authstatus==0&&babyInfo.isadmin==false&&babyInfo.deviceType=='2'){
                 localStorage.is='1';
                 this.setState({
                     model:Tool.assign({},this.state.model,{flag3:true}),
@@ -535,6 +542,8 @@ class MapIndex extends React.Component {
     render() {
 
         const getCurrenttime = GetCurrentDate.time();
+
+        const {babyInfo} =this.state;
 
         const {babyName, babytelephone, list, authstatus, babyid, headimg, values, lng, lat, gpstime, getGuardiansList, _checked, relationList, address, isLogin, datasource}=this.props;
         var isOpen = this.state.isOpen;
@@ -636,35 +645,35 @@ class MapIndex extends React.Component {
 
                 {/*未登录*/}
 
-                {
-                    isLogin == false ?
-                        <div>
+                {/*{*/}
+                    {/*isLogin == false ?*/}
+                        {/*<div>*/}
 
-                            <div className="add-device">
+                            {/*<div className="add-device">*/}
 
-                            </div>
-                            <div className="add-device-content">
-                                <div className="content">
-                                    <div style={{width: '20rem', height: '25rem', position: 'relative'}}>
+                            {/*</div>*/}
+                            {/*<div className="add-device-content">*/}
+                                {/*<div className="content">*/}
+                                    {/*<div style={{width: '20rem', height: '25rem', position: 'relative'}}>*/}
 
-                                        <img src={lsb} style={{width: '20rem', height: '25rem'}}/>
-                                        {/*<img src={dian} alt=""/>*/}
+                                        {/*<img src={lsb} style={{width: '20rem', height: '25rem'}}/>*/}
+                                        {/*/!*<img src={dian} alt=""/>*!/*/}
 
-                                        {/*<Link to="/AddDevice">*/}
-                                        <div className="_btn btn_btn" style={{bottom: '3rem'}}><a
-                                            href="tel:400-655-3588">电话咨询</a></div>
-                                        {/*</Link>*/}
+                                        {/*/!*<Link to="/AddDevice">*!/*/}
+                                        {/*<div className="_btn btn_btn" style={{bottom: '3rem'}}><a*/}
+                                            {/*href="tel:400-655-3588">电话咨询</a></div>*/}
+                                        {/*/!*</Link>*!/*/}
 
-                                    </div>
+                                    {/*</div>*/}
 
 
-                                </div>
+                                {/*</div>*/}
 
-                            </div>
-                        </div> :
-                        null
+                            {/*</div>*/}
+                        {/*</div> :*/}
+                        {/*null*/}
 
-                }
+                {/*}*/}
 
                 {
                     !!relationList ?
@@ -791,7 +800,7 @@ class MapIndex extends React.Component {
                         <img src={qiehuan} style={{width: '2.2rem', height: '3rem'}}/>
                     </div>
                 </div>
-                <div className="mapGuiji">
+                <div className="app-kuiji">
                     <Link to={'/about/' + babyid + '/' + lng + '/' + lat + ''}>
                         <img src={lishiguiji} style={{width: '2.3rem', height: '2.3rem'}}/>
                     </Link>
@@ -859,9 +868,9 @@ class MapIndex extends React.Component {
 
                             <div className="option">
                                 <Link to={'/about/' + babyid + '/' + lng + '/' + lat + ''}>
-                                    <img src={lishiguiji} style={{width: '2.3rem', height: '2.3rem'}}/>
+                                    <img src={banji} style={{width: '2.3rem', height: '2.3rem'}}/>
 
-                                    <div>历史轨迹</div>
+                                    <div>班级</div>
                                 </Link>
                             </div >
                             <div className="option">

@@ -28,6 +28,11 @@ var proxy = [
         host: 'api.17find.com'
     },
     {
+        path: '/thirdparty/*',
+        target: 'http://api.17find.com/',
+        host: 'api.17find.com'
+    },
+    {
         path: '/app/*',
         target: 'http://wx.17find.com/',
         host: 'api.17find.com'
@@ -63,8 +68,8 @@ server.app.get('*', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 });
 
-// server.listen(9527,'172.27.35.6');
-server.listen(9527,'30.6.48.161');
+server.listen(9527,'172.27.35.6');
+// server.listen(9527,'30.6.48.161');
 
 
 

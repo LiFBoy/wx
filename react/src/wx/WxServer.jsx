@@ -28,7 +28,8 @@ export default class wxServer{
         });
         console.log(code);
 
-        if(code.code==40002){
+        if(code.code==50006){
+          //  alert('laile');
 
             console.log(code.data.appid);
             console.log(code.data.timestamp);

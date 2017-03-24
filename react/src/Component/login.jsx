@@ -107,6 +107,8 @@ class Login extends React.Component {
         });
 
         window.localStorage.delDevice = 0;
+        // window.localStorage.is = '0';
+
         if(result.code==10008){
 
             this.props.doLogin2(result.data.token,result.data.userid,this);

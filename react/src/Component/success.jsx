@@ -29,22 +29,21 @@ export default class Success extends React.Component {
     }
     componentWillMount() {
         console.log(this.props.params.time);
+
+        window.localStorage.is=='0'
     }
 
     goto() {
 
         console.log(this);
-
-
         window.localStorage.delDevice = 1;
 
-      //  this.context.router.push(`/map/${localStorage.appToken}/${localStorage.userid}`);
+        this.context.router.push(`/map/${localStorage.appToken}/${localStorage.userid}`);
 
 
         //this.context.router.push('/map/' + result.data.token+'/'+result.data.userid);
 
-
-        window.location.href = `/index.html#/map/${localStorage.appToken}/${localStorage.userid}`;
+    // window.location.href = `/index.html#/map/${localStorage.appToken}/${localStorage.userid}`;
     }
 
     render() {

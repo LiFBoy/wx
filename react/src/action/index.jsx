@@ -893,7 +893,7 @@ export function scanDevice(component,mdtcode,frequent,code) {
         return HttpService.query({
             url: component.url,
 
-            data: {token: localStorage.appToken, mdtcode: mdtcode, mdtid: mdtcode,weixinclient:'true',frequent:frequent},
+            data: {token: localStorage.appToken, mdtcode: mdtcode, mdtid: mdtcode,weixinclient:'true',frequency:frequent},
 
 
             success: (res=> {

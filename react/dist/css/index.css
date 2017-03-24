@@ -1428,7 +1428,7 @@ header {
 }
 .calender > ._label > ._date,
 .calender2 > ._label > ._date {
-  font-size: 0.700rem;
+  font-size: 1rem;
 }
 .calender > ._label a,
 .calender2 > ._label a {
@@ -1437,7 +1437,7 @@ header {
 .calender table,
 .calender2 table {
   width: 100%;
-  font-size: 0.650rem;
+  font-size: 1rem;
 }
 .calender table th,
 .calender2 table th,
@@ -1489,7 +1489,7 @@ header {
   border-width: 1px;
   display: block;
   margin-left: 0.400rem;
-  font-size: 0.650rem;
+  font-size: 1rem;
   width: 0.500rem;
   height: 0.500rem;
   border-style: solid;
@@ -1512,7 +1512,7 @@ header {
 .calender2 > ._year-picker,
 .calender > ._month-picker,
 .calender2 > ._month-picker {
-  font-size: 0.700rem;
+  font-size: 1rem;
   text-align: center;
 }
 .calender > ._year-picker > ul,
@@ -1544,7 +1544,7 @@ header {
 }
 .calender > ._day-picker,
 .calender2 > ._day-picker {
-  font-size: 0.700rem;
+  font-size: 1rem;
 }
 .calender > ._day-picker table,
 .calender2 > ._day-picker table {
@@ -1680,7 +1680,7 @@ body,
 }
 
 .viewport {
-  width: 16rem;
+  width: 100%;
   overflow: hidden;
   margin: 0 auto;
   box-sizing: border-box;
@@ -1690,9 +1690,9 @@ body,
 
 
 .flipsnap {
-  width: 37.500rem;
-  /* 11.500rem(item) * 3 + 2.250rem(padding) */
-  padding-left: 2.500rem;
+  width: 66.700rem;
+  /* 400(item) * 3 + 2.250rem(padding)  690 */
+  padding-left: 6.700rem;
   box-sizing: border-box;
 }
 
@@ -1720,7 +1720,7 @@ body,
 .item {
   position: relative;
   box-sizing: border-box;
-  width: 10rem;
+  width: 20rem;
   text-align: center;
   /*background: #EFEFEF;*/
   float: left;
@@ -1769,6 +1769,10 @@ body,
   font-size: 1.500rem;
   color: #00b4ed;
 }
+.app-active-font32 {
+  font-size: 1.600rem;
+  color: #00b4ed;
+}
 .app-active-font36 {
   font-size: 1.800rem;
   color: #00b4ed;
@@ -1799,6 +1803,10 @@ body,
 }
 .app-hong-font28 {
   font-size: 1.400rem;
+  color: #ff626d;
+}
+.app-hong-font32 {
+  font-size: 1.600rem;
   color: #ff626d;
 }
 .app-333-font24 {
@@ -2544,7 +2552,7 @@ body,
   background: #333333;
 }
 .app-a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .app-swiper {
   text-align: center;
@@ -2604,17 +2612,23 @@ body,
   width: 4.500rem;
   height: 2.300rem;
   color: #FFFFff;
-  top: 90%;
+  top: 50%;
   left: 50%;
   margin: auto;
-  -webkit-transform: translate(-50%, -90%);
-          transform: translate(-50%, -90%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   border-radius: 0.500rem;
   text-align: center;
   line-height: 2.300rem;
 }
 .app-device {
   border: 0.100rem solid #DDDDDD;
+}
+.app-kuiji {
+  position: absolute;
+  top: 7.500rem;
+  right: 2.500rem;
+  z-index: 6;
 }
 html body {
   height: 100%;

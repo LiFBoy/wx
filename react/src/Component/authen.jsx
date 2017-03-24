@@ -16,6 +16,9 @@ import reason from '../img/more/reason.png'
 import {HttpService,Toast,Tool} from '../utils'
 
 class Authen extends React.Component{
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    };
     constructor(){
         super();
 
@@ -111,12 +114,12 @@ class Authen extends React.Component{
                     return cb(preRes.localIds[0], mediaRes.serverId)
                 },
                 fail: function (res) {
-                    alert(JSON.stringify(res));
+                  //  alert(JSON.stringify(res));
                 }
             });
         },
         fail: function (res) {
-            alert(JSON.stringify(res));
+           // alert(JSON.stringify(res));
         }
     });
 }
@@ -124,12 +127,12 @@ class Authen extends React.Component{
     deleteImg(type){
         if(type==1){
             this.setState({
-                uploadImg:Tool.assign({},this.state.uploadImg,{localIds:''})
+                uploadImg:Tool.assign({},this.state.uploadImg,{localIds:'',frontServerId:''})
 
             });
         }else{
             this.setState({
-                uploadImg:Tool.assign({},this.state.uploadImg,{localIdsBack:''})
+                uploadImg:Tool.assign({},this.state.uploadImg,{localIdsBack:'',backServerId:''})
 
             });
         }
@@ -145,7 +148,7 @@ class Authen extends React.Component{
                 success:  (res)=> {
                     var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
                     this.setState({
-                        uploadImg: Tool.assign({},this.state.uploadImg,{localIdsBack:localData})
+                        uploadImg: Tool.assign({},this.state.uploadImg,{localIdsBack:localData,backServerId:serverId})
                     });
                 }
             });
@@ -163,7 +166,7 @@ class Authen extends React.Component{
                 success:  (res)=> {
                     var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
                     this.setState({
-                        uploadImg:Tool.assign({},this.state.uploadImg,{localIds:localData})
+                        uploadImg:Tool.assign({},this.state.uploadImg,{localIds:localData,frontServerId:serverId})
 
                     });
                 }
@@ -178,16 +181,26 @@ class Authen extends React.Component{
     async auth(){
 
         const code=await HttpService.save({
-            url:"/app/user/auth",
+            url:"/thirdparty/weixin/saveUserAuthinfo",
             data:{
-                token:localStorage.localStorage.appToken,
+                token:localStorage.appToken,
                 devicetelephone:this.props.params.phone,
-                username:'李建彬',
-                idcard:'362429199411025317',
-                front:[],
-                back:[]
+                username:this.refs.username.value,
+                idcard:this.refs.idcard.value,
+                backServerId:this.state.uploadImg.backServerId,
+                frontServerId:this.state.uploadImg.frontServerId
             }
-        })
+        });
+
+        if(code.code==50006){
+            Toast.toast('提交成功',3000);
+            // localStorage.is=='0'
+
+            this.context.router.push('/map/' + localStorage.appToken+'/'+localStorage.userid);
+
+        }else {
+            Toast.toast(code.msg,3000)
+        }
 
     }
 
@@ -204,7 +217,7 @@ class Authen extends React.Component{
                             <img src={name} className="app-headerImg"/>
                         </div>
                         <div className="s-flex2">
-                            <input type="text" className="app-333-font28" placeholder="请输入您的真实姓名"/>
+                            <input type="text" className="app-333-font28" ref="username" placeholder="请输入您的真实姓名"/>
                         </div>
                     </div>
                     <div className="step app-white-chunk border-bottom">
@@ -212,7 +225,7 @@ class Authen extends React.Component{
                             <img src={idcard} className="app-headerImg"/>
                         </div>
                         <div className="s-flex2">
-                            <input type="text" className="app-333-font28" placeholder="请输入您的身份证"/>
+                            <input type="text" className="app-333-font28" ref="idcard" placeholder="请输入您的身份证"/>
                         </div>
                     </div>
                 </div>

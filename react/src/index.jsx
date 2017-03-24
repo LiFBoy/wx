@@ -12,10 +12,10 @@ import createStore from './store'
 
 import WxServer from './wx/WxServer'
 
+
 setTimeout(()=>{
-    // WxServer.init()
-    console.log(wx)
-},3000);
+    WxServer.init();
+},500);
 
 let store = createStore();
 

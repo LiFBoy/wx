@@ -107,7 +107,7 @@ export default class Demo extends React.Component {
 
         const item1=Cs({"item":true,"select-item":item.item1});
         const item2=Cs('app-margin-lr10',{"item":true,"select-item":item.item2})
-        const item3=Cs({"item":true,"select-item":item.item3});
+        const item3=Cs({"item":true,"select-item":item.item3,'app-margin-right24':true});
 
         // const next=Cs('app-btn',{"app-yellow-radius-check-button":!!item.item1||!!item.item2||!!item.item3,"app-unselect":!item.item1||!item.item2||!item.item3?})
 
