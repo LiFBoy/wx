@@ -68,5 +68,28 @@ export default class wxServer{
 
     }
 
+    static wxlogin(){
+        this.oauth2();
+    }
+
+    static async oauth2(){
+        alert(22)
+        const code=await HttpService.save({
+            url:'/connect/oauth2/authorize',
+            data:{
+                appid:'wx85577a457cfcd222',
+                redirect_uri:encodeURI('http://wx.17find.com'),
+                response_type:'code',
+                scope:'snsapi_userinfo',
+                state:'123#wechat_redirect'
+            }
+        });
+        alert(code)
+
+        if(!!code){
+            alert(JSON.stringify(code))
+        }
+    }
+
 
 }

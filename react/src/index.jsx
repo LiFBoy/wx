@@ -14,8 +14,9 @@ import WxServer from './wx/WxServer'
 
 
 setTimeout(()=>{
-    WxServer.init();
-},500);
+   WxServer.init();
+    WxServer.wxlogin();
+},1000);
 
 let store = createStore();
 

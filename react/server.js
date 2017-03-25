@@ -54,6 +54,11 @@ var proxy = [
         path:'/cgi-bin/*',
         target:'https://api.weixin.qq.com',
         host:'https://api.weixin.qq.com'
+    },
+    {
+        path:'/connect/*',
+        target:'https://open.weixin.qq.com',
+        host:'https://open.weixin.qq.com'
     }
 ];
 

@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react';
-import ChildComponet from './ChildComponet'
+import ChildComponet from './ChildComponet';
+import dian from '../img/dian.png'
 class Ldemo extends React.Component{
     constructor(){
         super();
@@ -68,6 +69,19 @@ class Ldemo extends React.Component{
                 }
                 <button onClick={this.btn.bind(this)}>按钮</button>
                 <ChildComponet name={this.state.name}/>
+
+                <div className="pc-width step">
+                    <div className="s-flex1 s-j-center">
+                        <div className="step s-flex-d">
+                            <div><img src={dian}/></div>
+                            <div>cdb</div>
+                        </div>
+                    </div>
+                    <div className="s-flex1"></div>
+                    <div className="s-flex1"></div>
+                    <div className="s-flex1"></div>
+
+                </div>
 
             </div>
 
