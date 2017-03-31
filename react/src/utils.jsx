@@ -1,106 +1,61 @@
 'use strict';
-export  class HttpService {
+export class HttpService {
     static query(config) {
-            return new Promise((resolve,reject)=>{
-                config = config || {};
-                var params = HttpService.formatParams(config.data);
-                var request = new XMLHttpRequest();
-                    request.onreadystatechange =()=>{
-                        if (request.readyState === 4) {
-                            if (request.status ===200) {
-                                var response;
-                                try {
-                                    response = JSON.parse(request.responseText);
-                                    resolve(response)
-                                } catch (e) {
-                                    reject(e);
-                                }
-                                // if (response.code=='0') {
-                                //     resolve(response);
-                                // }else{
-                                //
-                                //   //       window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
-                                //
-                                //     Toast.toast(response.desc, 3000);
-                                //     //reject(response)
-                                // }
-                            } else {
-                             //   window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
-
-                              //  Toast.toast(JSON.parse(request.responseText).desc, 3000);
-                                //reject(request);
-                            }
+        return new Promise((resolve, reject) => {
+            config = config || {};
+            var params = HttpService.formatParams(config.data);
+            console.log(params)
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = () => {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        var response;
+                        try {
+                            response = JSON.parse(request.responseText);
+                            resolve(response)
+                        } catch (e) {
+                            reject(e);
                         }
+                        // if (response.code=='0') {
+                        //     resolve(response);
+                        // }else{
+                        //
+                        //   //       window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
+                        //
+                        //     Toast.toast(response.desc, 3000);
+                        //     //reject(response)
+                        // }
+                    } else {
+                        //   window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
 
-                    };
+                        //  Toast.toast(JSON.parse(request.responseText).desc, 3000);
+                        //reject(request);
+                    }
+                }
 
-
-                request.open("GET", config.url + "?" + params, true);
-                request.send(null);
-    })
-}
-        // config = config || {};
-        // var params = HttpService.formatParams(config.data);
-        //
-        // var request = new XMLHttpRequest();
-        // request.onreadystatechange = function () {
-        //     if (request.readyState == 4) {
-        //         var status = request.status;
-        //         if (status >= 200 && status < 300) {
-        //             var res = JSON.parse(request.responseText);
-        //
-        //         //     if(res){
-        //         //         config.success && config.success(res);
-        //         //     }
-        //         //     // if (res.result == 0) {
-        //         //     //     config.success && config.success(res.data);
-        //         //     // } else if (res.result == 1013) {
-        //         //     //     window.localStorage.referer = window.location.href;
-        //         //     //     window.location.href = 'login.html'
-        //         //     // } else {
-        //         //     //     return config.error && config.error(res.result, res.msg)
-        //         //     // }
-        //         // } else {
-        //         //     return config.fail && config.fail(status);
-        //         // }
-        //     }
-        // };
-        // request.open('GET', config.url + "?" + params, true);
-        // request.send(null);
+            };
 
 
-        // setTimeout(CheckRequest,"0");
-        //
-        //
-        // function CheckRequest() {
-        //
-        //     console.log(request.readyState);
-        //     if(request.readyState!=4){
-        //         request.abort()
-        //     }
-        // }
-
-
-
+            request.open("GET", config.url + "?" + params, true);
+            request.send(null);
+        })
+    }
 
     static save(config) {
 
 
-        return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
             config = config || {};
             var params = HttpService.formatParams(config.data);
 
             console.log(params)
-
-
             console.log(config.data)
             var request = new XMLHttpRequest();
-            request.onreadystatechange =()=>{
+            request.onreadystatechange = () => {
                 if (request.readyState === 4) {
 
 
-
-                    if (request.status ===200) {
+                    if (request.status === 200) {
                         var response;
                         try {
                             response = JSON.parse(request.responseText);
@@ -109,9 +64,9 @@ export  class HttpService {
                             reject(e);
                         }
                     } else {
-                       // window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
+                        // window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
 
-                     //   Toast.toast(JSON.parse(request.responseText).desc, 3000);
+                        //   Toast.toast(JSON.parse(request.responseText).desc, 3000);
                         //reject(request);
                     }
                 }
@@ -121,71 +76,37 @@ export  class HttpService {
             request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             request.send(params);
         });
-        // config = config || {};
-        //
-        // var params = HttpService.formatParams(config.data);
-        //
-        // var request = new XMLHttpRequest();
-        // request.onreadystatechange = function () {
-        //     if (request.readyState == 4) {
-        //         var status = request.status;
-        //         if (status >= 200 && status < 300) {
-        //             var res = JSON.parse(request.responseText);
-        //
-        //             if(res){
-        //                 config.success && config.success(res);
-        //             }
-        //
-        //            //  console.log(res.msg)
-        //            // // Toast.toaster(res.msg);
-        //            //  if (res.result == 0) {
-        //            //      config.success && config.success(res.data);
-        //            //  } else if (res.result == 1013) {
-        //            //      window.localStorage.referer = window.location.href;
-        //            //      window.location.href = 'login.html'
-        //            //  } else {
-        //            //      config.error && config.error(res.result, res.msg)
-        //            //  }
-        //         } else {
-        //             config.fail && config.fail(status);
-        //         }
-        //     }
-        // };
-        // request.open("POST", config.url, true);
-        // request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        // request.send(params);
+
 
     }
-
 
 
     static saveJson(config) {
 
 
-        return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
             config = config || {};
             var params = JSON.stringify(config.data);
             var request = new XMLHttpRequest();
-            request.onreadystatechange =()=>{
+            request.onreadystatechange = () => {
                 if (request.readyState === 4) {
-                    if (request.status ===200) {
+                    if (request.status === 200) {
                         var response;
                         try {
                             response = JSON.parse(request.responseText);
                         } catch (e) {
                             reject(e);
                         }
-                        if (response.code=='0') {
+                        if (response.code == '0') {
                             resolve(response);
-                        }else{
+                        } else {
 
-                              //  window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
 
                             Toast.toast(response.desc, 3000);
                             //reject(response)
                         }
                     } else {
-                      //  window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
+                        //  window.g_bridge.callHandler('sendMessageToApp', {type:2, data:{url:"http://www.baidu.com"}}, function(response) {});
 
                         Toast.toast(JSON.parse(request.responseText).desc, 3000);
                         //reject(request);
@@ -193,7 +114,7 @@ export  class HttpService {
                 }
 
             };
-            request.open("POST", config.url, true);
+            request.open("POST", config.url + "?" + params, true);
             request.setRequestHeader("Content-Type", "application/json");
             request.send(params);
         });
@@ -211,31 +132,33 @@ export  class HttpService {
 
 }
 
-export  class Toast{
-    static toast(msg,duration,bottom){
+export class Toast {
+    static toast(msg, duration, bottom) {
 
-      if(!bottom){
-          bottom='12rem'
-      }else{
-          bottom='12rem'
-      }
-        duration=isNaN(duration)?3000:duration;
+        if (!bottom) {
+            bottom = '12rem'
+        } else {
+            bottom = '12rem'
+        }
+        duration = isNaN(duration) ? 3000 : duration;
         var m = document.createElement('div');
         m.innerHTML = msg;
-        m.style.cssText='width:20rem;opacity:0.5; height:40px; color:#fff; line-height:40px; ' +
-            'text-align:center; border-radius:1rem; position:fixed; bottom:'+bottom+'; left:50%; z-index:999999; ' +
+        m.style.cssText = 'width:20rem;opacity:0.5; height:40px; color:#fff; line-height:40px; ' +
+            'text-align:center; border-radius:1rem; position:fixed; bottom:' + bottom + '; left:50%; z-index:999999; ' +
             'font-weight:bold; filter: alpha(opacity=80); background: #000;margin-left: -10rem;';
         document.body.appendChild(m);
-        setTimeout(function() {
+        setTimeout(function () {
             var d = 0.5;
             m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
             m.style.opacity = '0';
-            setTimeout(function() { document.body.removeChild(m) }, d * 1000);
+            setTimeout(function () {
+                document.body.removeChild(m)
+            }, d * 1000);
         }, duration);
     }
 }
 
-export class FormDate{
+export class FormDate {
     static formatDate(now) {
         var year = now.getFullYear();
         var month = now.getMonth() + 1;
@@ -246,7 +169,7 @@ export class FormDate{
         return year + "-" + month + "-" + date + "   " + hour + ":" + minute + ":" + second;
     }
 
-    static time(timestamp3){
+    static time(timestamp3) {
         var newDate = new Date(timestamp3 * 1000);
         return FormDate.formatDate(newDate);
 
@@ -255,27 +178,25 @@ export class FormDate{
 
 }
 
-export class FormMoney{
+export class FormMoney {
     static yuanFen(money) {
 
-        return money *100
+        return money * 100
     }
 
-    static fenYuan(money){
-       return money * 0.01
+    static fenYuan(money) {
+        return money * 0.01
     }
 
 
 }
 
 
-
-
-export class Tool{
-    static assign(...args){
-        if(Object.assign){
-         return Object.assign({},...args)
-         }
+export class Tool {
+    static assign(...args) {
+        if (Object.assign) {
+            return Object.assign({}, ...args)
+        }
         let from,
             target = args[0] || {},
             length = args.length;
@@ -291,27 +212,22 @@ export class Tool{
 }
 
 
-
-export class GetCurrentDate{
-   static time() {
+export class GetCurrentDate {
+    static time() {
         var datetime = new Date();
         datetime.setDate(datetime.getDate());
         var year = datetime.getFullYear();
         var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
         var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-        var hour = datetime.getHours()<10 ? "0" + datetime.getHours(): datetime.getHours();
-        var minute = datetime.getMinutes() < 10 ? "0" +datetime.getMinutes() :datetime.getMinutes() ;
+        var hour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+        var minute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
         var second = datetime.getSeconds();
-        return hour + ":" + minute  ;
+        return hour + ":" + minute;
     }
 }
 
 
-
-
-
-
-export class Md5{
+export class Md5 {
     static MD5(s) {
         var hexcase = 0;
         var b64pad = "";

@@ -5,18 +5,6 @@ var config = require('./webpack.config');
 
 // 相当于通过本地node服务代理请求
 var proxy = [
-    // {
-    //
-    //     path: '/appH5/*',
-    //     target: 'http://wx.17find.com/',
-    //     host: '222.46.27.218:8800'
-    // },
-    // {
-    //
-    //     path: '/appH5/*',
-    //     target: 'http://222.46.27.218:8800',
-    //     host: '222.46.27.218:8800'
-    // },
     {
         path: '/app/*',
         target: 'http://api.17find.com/',
@@ -27,38 +15,12 @@ var proxy = [
         target: 'http://api.17find.com/',
         host: 'api.17find.com'
     },
-    {
-        path: '/thirdparty/*',
-        target: 'http://api.17find.com/',
-        host: 'api.17find.com'
-    },
-    {
-        path: '/app/*',
-        target: 'http://wx.17find.com/',
-        host: 'api.17find.com'
-    },
 
-
-    {
-        path: '/operationapp/*',
-        target: 'http://222.46.27.218:8800',
-        host: '222.46.27.218:8800'
-    },
-    {
-        path: '/media/*',
-        target: 'http://222.46.27.218:8800',
-        host: '222.46.27.218:8800'
-    },
 
     {
         path:'/cgi-bin/*',
         target:'https://api.weixin.qq.com',
         host:'https://api.weixin.qq.com'
-    },
-    {
-        path:'/connect/*',
-        target:'https://open.weixin.qq.com',
-        host:'https://open.weixin.qq.com'
     }
 ];
 

@@ -40,6 +40,30 @@ secret	是	第三方用户唯一凭证密钥，即appsecret
     我这边把 timeStamp，url传你，你返回  appId  timestamp  nonceStr  signature 就行
 
 
+第四步 网页授权 获取code:
+
+
+https://open.weixin.qq.com/connect/oauth2/authorize?
+appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+
+具体的参数说明在
+https://mp.weixin.qq.com/wiki/4/9ac2e7b1f1d22e9e57260f6553822520.html
+
+
+
+获取code后，请求以下链接获取access_token：
+https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+
+{
+   "access_token":"ACCESS_TOKEN",
+   "expires_in":7200,
+   "refresh_token":"REFRESH_TOKEN",
+   "openid":"OPENID",
+   "scope":"SCOPE"
+}
+
+会返回openid
+
 
 
 

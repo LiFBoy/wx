@@ -5,7 +5,11 @@ class Flex extends React.Component{
 
     render(){
         return (
-            <div className="step"></div>
+            <div className="step">
+
+            </div>
+
+
         )
     }
 

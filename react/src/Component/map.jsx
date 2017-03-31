@@ -326,6 +326,10 @@ class MapIndex extends React.Component {
         // }
 
 
+
+
+
+
         if(localStorage.delDevice==1){
             this.props.getOneBabyid();
         }else if(!!this.props.babyid){

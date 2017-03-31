@@ -29,18 +29,15 @@ class Login extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired
     };
-    constructor(props){
+
+    constructor(props) {
         super(props);
-        this.state={
-            model:{
-
-            },
-            banners:{
-
-            }
+        this.state = {
+            model: {},
+            banners: {}
 
         };
-        this.modelConfig={
+        this.modelConfig = {
             header: <div className="header">
 
                 <img src={header} className="app-all-img"/>
@@ -62,8 +59,6 @@ class Login extends React.Component {
                 </div>
 
 
-
-
             </div>,
             footer: <div className="footer">
                 <img src={footer} className="app-all-img"/>
@@ -72,126 +67,157 @@ class Login extends React.Component {
         }
     }
 
-    componentDidMount(){
+    componentWillMount() {
+        this.a()
 
-        // var a=document.getElementsByTagName('a');
-        // for(var i=0;i<a.length;i++){
-        //     alert(111)
-        //     a[i].addEventListener('touchstart',function(){},false);
-        // }
     }
 
+    componentDidMount() {
 
-    ee(event){
-        event.preventDefault();
     }
-    async login(){
 
-        // this.setState({
-        //     model:{
-        //         flag:true
-        //     }
-        // })
+    shouldComponentUpdate() {
+        console.log('shouldupdate');
+        if (this.name('code')) {
+            alert(11)
+            return false
+        } else {
+            alert(22)
+            window.location.href = 'http://api.17find.com/thirdparty/weixin/wxlogin?weixinclient=true&redirect_uri=https%3A%2F%2Fwx.17find.com%2F'
+            return true
+        }
+    }
+
+    async a() {
 
 
+        if (this.name('code')) {
 
-        const phone=this.refs.phone.value;
-        const pwd=this.refs.pwd.value;
-     var result=  await HttpService.save({
-            url:'/app/user/login',
-            data:{
-                account:phone,
-                password:pwd,
-                weixinclient:'true'
+            const code = await HttpService.query({
+                url: '/thirdparty/weixin/wxlogin_callback',
+                data: {
+                    code: this.name('code')
+                }
+
+            });
+            alert(JSON.stringify(code))
+
+        } else {
+
+        }
+    }
+
+    name(name) {
+
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+
+    }
+
+    async login() {
+
+        const phone = this.refs.phone.value;
+        const pwd = this.refs.pwd.value;
+        var result = await HttpService.save({
+            url: '/app/user/login',
+            data: {
+                account: phone,
+                password: pwd,
+                weixinclient: 'true'
             }
         });
 
         window.localStorage.delDevice = 0;
         // window.localStorage.is = '0';
 
-        if(result.code==10008){
+        if (result.code == 10008) {
 
-            this.props.doLogin2(result.data.token,result.data.userid,this);
+            this.props.doLogin2(result.data.token, result.data.userid, this);
 
-            this.context.router.push('/map/' + result.data.token+'/'+result.data.userid);
+            this.context.router.push('/map/' + result.data.token + '/' + result.data.userid);
 
-        }else if(result.code==10007){
-            Toast.toast(result.msg,3000)
-        }else if(result.code==100073){
+        } else if (result.code == 10007) {
+            Toast.toast(result.msg, 3000)
+        } else if (result.code == 100073) {
             window.localStorage.userid = result.data.userid;
-           //this.props.history.replaceState(null,'demo');
+            //this.props.history.replaceState(null,'demo');
             this.context.router.push('/demo/100073');
-        }else if(result.code==100071){
-            Toast.toast(result.msg,3000)
-        }else if(result.code==100072){
-            Toast.toast(result.msg,3000)
-        }else if(result.code==100074){
+        } else if (result.code == 100071) {
+            Toast.toast(result.msg, 3000)
+        } else if (result.code == 100072) {
+            Toast.toast(result.msg, 3000)
+        } else if (result.code == 100074) {
             //去认证
-        }else if(result.code==100075){
+        } else if (result.code == 100075) {
             //去支付
         }
 
 
     }
+
     render() {
+
+        console.log('render')
         const {model} =this.state;
         return (
             <div className="app-login app-padding-lr24" ref='_login'>
 
                 <Model modelConfig={this.modelConfig} flag={model.flag}/>
-                    <div className="step">
-                        <div className="s-center">
-                            <div className="login-img">
-                                <img src={user} className="app-wh100-all"/>
+                <div className="step">
+                    <div className="s-center">
+                        <div className="login-img">
+                            <img src={user} className="app-wh100-all"/>
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="step border-bottom app-wh120">
-                        <div className="app-wh-45 app-margin-right24">
-                            <img className="app-wh100-all-radius" src={phone}/>
-                        </div>
-
-                        <div className="s-flex1 app-666-font30">
-                            <input className="app-333-font28 login-input"
-                                   placeholder="监护人手机号码" type="number" ref='phone'/>
-                        </div>
-
-                    </div>
-                    <div className="step border-bottom app-wh120">
-                        <div className="app-wh-45 app-margin-right24">
-                            <img className="app-wh100-all-radius" src={pwd}/>
-                        </div>
-
-                        <div className="s-flex1 app-666-font30">
-                            <input className="app-333-font28 login-input"
-                                   placeholder="6-20位字符密码，区分大小写" type="password" ref="pwd" />
-                        </div>
-
+                <div className="step border-bottom app-wh120">
+                    <div className="app-wh-45 app-margin-right24">
+                        <img className="app-wh100-all-radius" src={phone}/>
                     </div>
 
-                    <div className="step app-yellow-radius-check-button login-btn" onClick={this.login.bind(this)}>
-                        {/*<input className="s-center" type="submit" readOnly="readOnly" value="登录"/>*/}
-
-                        <div className="s-center">登录</div>
+                    <div className="s-flex1 app-666-font30">
+                        <input className="app-333-font28 login-input"
+                               placeholder="监护人手机号码" type="number" ref='phone'/>
                     </div>
 
-
-                    <div className="step">
-                        <Link to={'/register'} className="s-flex1 app-a">
-                            <div className="s-flex1 s-j-end app-333-font28">新用户开通</div>
-                        </Link>
-                        <div className="app-padding-lr50 app-with1"></div>
-                        <Link to={'/ForgetPwd'} className="s-flex1 app-a">
-
-                            <div className="s-flex1 app-333-font28">忘记密码</div>
-
-                        </Link>
+                </div>
+                <div className="step border-bottom app-wh120">
+                    <div className="app-wh-45 app-margin-right24">
+                        <img className="app-wh100-all-radius" src={pwd}/>
                     </div>
+
+                    <div className="s-flex1 app-666-font30">
+                        <input className="app-333-font28 login-input"
+                               placeholder="6-20位字符密码，区分大小写" type="password" ref="pwd"/>
+                    </div>
+
+                </div>
+
+                <div className="step app-yellow-radius-check-button login-btn" onClick={this.login.bind(this)}>
+                    {/*<input className="s-center" type="submit" readOnly="readOnly" value="登录"/>*/}
+
+                    <div className="s-center">登录</div>
+                </div>
+
+
+                <div className="step">
+                    <Link to={'/register'} className="s-flex1 app-a">
+                        <div className="s-flex1 s-j-end app-333-font28">新用户开通</div>
+                    </Link>
+                    <div className="app-padding-lr50 app-with1"></div>
+                    <Link to={'/ForgetPwd'} className="s-flex1 app-a">
+
+                        <div className="s-flex1 app-333-font28">忘记密码</div>
+
+                    </Link>
+                </div>
 
                 {/*<div>*/}
-                    {/*<span><a href='http://www.baidu.com' target='_blank'>BLANK-</a></span>*/}
+                {/*<span><a href='http://www.baidu.com' target='_blank'>BLANK-</a></span>*/}
                 {/*</div>*/}
             </div>
 
@@ -200,12 +226,8 @@ class Login extends React.Component {
 }
 
 
-
 const mapStateToProps = state => {
-    return {
-
-
-    };
+    return {};
 };
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({

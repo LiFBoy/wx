@@ -1,6 +1,9 @@
 'use strict';
 
 import {HttpService} from '../utils'
+
+
+import $ from 'jquery';
 export default class wxServer{
 
     constructor(){
@@ -64,32 +67,70 @@ export default class wxServer{
 
         const nonceStr=this.createNonceStr();
         const timestamp=this.createTimeStamp();
-        this.wx(nonceStr,timestamp)
+       // this.wx(nonceStr,timestamp)
 
     }
 
     static wxlogin(){
-        this.oauth2();
+      //  this.oauth2();
+        //this.au();
+      // this.a()
+        // this.login();
     }
 
+
+
+
     static async oauth2(){
-        alert(22)
-        const code=await HttpService.save({
+        var url=encodeURIComponent('https://wx.17find.com/');
+        console.log(url);
+        const code=await HttpService.query({
             url:'/connect/oauth2/authorize',
             data:{
                 appid:'wx85577a457cfcd222',
-                redirect_uri:encodeURI('http://wx.17find.com'),
+                redirect_uri:url,
                 response_type:'code',
-                scope:'snsapi_userinfo',
+                scope:'snsapi_base',
                 state:'123#wechat_redirect'
             }
         });
-        alert(code)
+
+        console.log('sss'+code);
 
         if(!!code){
             alert(JSON.stringify(code))
         }
     }
+
+    static name(name){
+
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+
+    }
+
+    static async  a(){
+
+      //  alert(window.location.href)
+
+
+
+
+
+
+       // alert()
+        // const code= await HttpService.query({
+        //     url:'/thirdparty/weixin/wxlogin',
+        //     data:{
+        //         weixinclient:'true',
+        //         redirect_uri:'https//wx.17find.com/test2.html'
+        //     }
+        // })
+
+
+    }
+
 
 
 }
